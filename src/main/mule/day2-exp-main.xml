@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:file="http://www.mulesoft.org/schema/mule/file"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	
+	<flow name="starter-mules-projectFlow" doc:id="99ce147d-7db8-4dc2-b8c3-59d71f8138e1" >
+		<http:listener doc:name="Listener" doc:id="9e6f3bb0-8ff1-4c26-a47b-d13c145127e5" config-ref="HTTP_Listener_config" path="/exp" allowedMethods="GET"/>
+		<logger level="INFO" doc:name="Logger" doc:id="21b23962-5133-46c7-b408-9f98ddc9b678" message='"inicio exp"'/>
+		<file:list doc:name="List" doc:id="75a6737f-5acb-44c5-a0db-9c070b92c0f2" config-ref="File_Config" directoryPath="input">
+					<file:matcher filenamePattern='#["*." ++ lower(attributes.queryParams.extension) as String]' />
+				</file:list>
+		<foreach doc:name="For Each" doc:id="6d75897f-8aab-4054-bcd2-d8e94c6b9ef8" collection="#[payload]">
+			<logger level="INFO" doc:name="Logger" doc:id="5bbf111f-2b3d-45f6-b79b-d71dfdfa9ae6" message='#["tratando el fichero" ++ attributes.fileName]' />
+			<http:request method="GET" doc:name="Request" doc:id="57fb2477-8728-4b51-847a-69d3db9233f4" path="/process" config-ref="HTTP_Request_configuration">
+				<http:query-params ><![CDATA[#[output application/java
+---
+{
+	"fileName" : attributes.fileName
+}]]]></http:query-params>
+			</http:request>
+		</foreach>
+		<ee:transform doc:name="Transform Message" doc:id="b0084568-0c4e-4079-a719-187d19fffd97" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output text/plain
+---
+"fichero tratado"]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="ff9ffce9-5068-42c3-a578-fa6ace786a7f" message='"fin exp"'/>
+	</flow>
+	
+</mule>
