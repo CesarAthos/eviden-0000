@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd"></mule>
+<mule xmlns:file="http://www.mulesoft.org/schema/mule/file" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd">
+	<flow name="day2-drs-sysFlow" doc:id="5f772620-aca1-4783-a0ae-9b68068b38a0" >
+		<http:listener doc:name="Listener" doc:id="929b59ce-0bab-4790-8e35-a6aa662df2e7" config-ref="HTTP_Listener_config" path="/sys"/>
+		<logger level="INFO" doc:name="Logger" doc:id="aeb1abee-d251-4c1e-a81a-7fda9c4ac435" message='Inicio Sys'/>
+		<file:move doc:name="Move" doc:id="d5ce3359-8af0-4ee5-a8c3-9cc652873f2e" config-ref="File_Config" sourcePath='#["input/" ++ attributes.queryParams.fileName as String]' targetPath="output"/>
+		<logger level="INFO" doc:name="Logger" doc:id="7c164752-ac0c-4a1d-8d0d-4cc1f7a133c6" message="fin Sys"/>
+	</flow>
+</mule>
