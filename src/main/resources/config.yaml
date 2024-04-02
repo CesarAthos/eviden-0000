@@ -1,0 +1,9 @@
+http:
+  listener:
+    port: "8082"
+  request:
+    host: "localhost"
+    port: "8083"
+
+file:
+  directory: "C:/Users/a142191/OneDrive - Eviden/Documents/mule/cesar/day2"

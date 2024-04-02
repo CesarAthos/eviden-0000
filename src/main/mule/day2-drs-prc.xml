@@ -1,5 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd"></mule>
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:file="http://www.mulesoft.org/schema/mule/file"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="day2-drs-prcFlow" doc:id="767a056e-c794-4038-8681-918e8e1b87ac" >
+		<http:listener doc:name="Listener" doc:id="e0c1a2c1-bed5-40de-ac87-1d1b3834babf" path="/process" config-ref="HTTP_Listener_config">
+			<http:error-response statusCode="500" />
+		</http:listener>
+		<logger level="INFO" doc:name="Logger" doc:id="158df63c-2173-4a5a-8c4d-c9baa4db7d4b" message='"Inicio prc"'/>
+		<set-variable value="#[attributes.queryParams.fileName]" doc:name="Set Variable" doc:id="f37cb605-72d7-4bce-9f26-e87444791dbe" variableName="fileName"/>
+		<file:read doc:name="Read" doc:id="a89daea8-f3ef-4290-bbc9-9acb9d99b95f" config-ref="File_Config" path='#["input/" ++ attributes.queryParams.fileName as String]' />
+		<choice doc:name="Choice" doc:id="81978207-0c04-4bd1-9502-b3063b720e9d">
+			<when expression='#[endsWith(vars.fileName, "csv")]'>
+				<logger level="INFO" doc:name="Logger" doc:id="dbfdf679-ba4b-4c82-8497-c332147c3bb8" message='#["Procesando fichero csv " ++ vars.fileName as String]' />
+				<ee:transform doc:name="CSV to TXT" doc:id="7a6bf8c5-30be-4c31-8977-729f508c8ff6">
+					<ee:message>
+						<ee:set-payload><![CDATA[%dw 2.0
+output application/flatfile schemaPath = "csvOutputMetadata.ffd"
+---
+payload map ( payload01 , indexOfPayload01 ) -> {
+	id: payload01.id,
+	firstName: payload01.first_name,
+	lastName: payload01.last_name,
+	email: payload01.email,
+	gender: payload01.gender,
+	ip: payload01.ip_address
+}]]></ee:set-payload>
+					</ee:message>
+				</ee:transform>
+				<file:write doc:name="Write TXT" doc:id="ac80c64d-7f85-4ab8-a0a3-ca8cef46e05d" config-ref="File_Config" path='#["output/" ++ vars.fileName ++ ".txt"]' />
+			</when>
+			<otherwise>
+				<logger level="INFO" doc:name="Logger" doc:id="20172ec1-69fd-4b64-bb6d-c6ba617a3c90" message='#["Procesando fichero xml"  ++ vars.fileName as String]' />
+				<ee:transform doc:name="XML to CSV" doc:id="d0b583f2-a31d-4e10-b336-6c3a6ab4f0e4">
+					<ee:message>
+						<ee:set-payload><![CDATA[%dw 2.0
+output application/csv
+---
+payload.dataset.*record map ( record , indexOfRecord ) -> {
+	id: record.id default 0,
+	name: record.name default "",
+	description: record.description default "",
+	direccion: record.direccion default "",
+	sexo: record.sexo default "",
+	CP: record.CP default ""
+}]]></ee:set-payload>
+					</ee:message>
+				</ee:transform>
+				<file:write doc:name="Write CSV" doc:id="a040ba38-5143-4050-acd3-b7305e322da4" config-ref="File_Config" path='#["output/" ++ vars.fileName ++ ".csv"]' />
+			</otherwise>
+		</choice>
+		<http:request method="GET" doc:name="Request" doc:id="3bc1f9e2-3209-4135-93aa-fdd9a81c6208" config-ref="HTTP_Request_configuration" path="/sys">
+			<http:query-params ><![CDATA[#[output application/java
+---
+{
+	fileName : vars.fileName
+}]]]></http:query-params>
+		</http:request>
+		<ee:transform doc:name="Transform Message" doc:id="b551b7e6-f940-49b0-877a-11bd71aaa0c6">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+"Transformacion completa"]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="db47dd82-c2be-4ac8-8b18-77c786271783" message='"Fin prc"'/>
+	</flow>
+</mule>

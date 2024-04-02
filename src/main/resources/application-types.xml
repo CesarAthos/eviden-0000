@@ -1,0 +1,55 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<types:mule xmlns:types="http://www.mulesoft.org/schema/mule/types">
+  <types:catalog>
+    <types:type name="csvExample" format="csv">
+      <types:shape format="weave" example="examples/2-persons.csv"><![CDATA[%dw 2.0
+
+type csvExample = Array<{|  id: String,   first_name: String,   last_name: String,   email: String,   gender: String,   ip_address: String|}> {"isQuotedString": "false",
+"header": "true",
+"headerLineNumber": "0",
+"separator": ","}
+
+]]></types:shape>
+      <types:properties>
+        <types:property name="headerLineNumber" value="0"/>
+        <types:property name="header" value="true"/>
+        <types:property name="isQuotedString" value="false"/>
+        <types:property name="separator" value=","/>
+      </types:properties>
+    </types:type>
+    <types:type name="xmlExample" format="xml">
+      <types:example format="xml" element="dataset" location="examples/2-dataset.xml"/>
+    </types:type>
+    <types:type name="csvOutputMetadata" format="fixedWidth">
+      <types:shape format="fixedWidth" element="csvOutputMetadata" location="csvOutputMetadata.ffd"/>
+    </types:type>
+  </types:catalog>
+  <types:enrichment select="#7a6bf8c5-30be-4c31-8977-729f508c8ff6">
+    <types:processor-declaration>
+      <types:input-event>
+        <types:message>
+          <types:payload type="csvExample"/>
+        </types:message>
+      </types:input-event>
+      <types:output-event>
+        <types:message>
+          <types:payload type="csvOutputMetadata"/>
+        </types:message>
+      </types:output-event>
+    </types:processor-declaration>
+  </types:enrichment>
+  <types:enrichment select="#d0b583f2-a31d-4e10-b336-6c3a6ab4f0e4">
+    <types:processor-declaration>
+      <types:input-event>
+        <types:message>
+          <types:payload type="xmlExample"/>
+        </types:message>
+      </types:input-event>
+      <types:output-event>
+        <types:message>
+          <types:payload type="csvOutputMetadata"/>
+        </types:message>
+      </types:output-event>
+    </types:processor-declaration>
+  </types:enrichment>
+</types:mule>

@@ -1,0 +1,10 @@
+form: FIXEDWIDTH
+id: 'csvOutputMetadata'
+name: 'csvOutputMetadata'
+values: 
+- { name: 'id', usage: M, type: String, length: 20 }
+- { name: 'firstName', usage: M, type: String, length: 50 }
+- { name: 'lastName', usage: M, type: String, length: 50 }
+- { name: 'email', usage: M, type: String, length: 50 }
+- { name: 'gender', usage: M, type: String, length: 50 }
+- { name: 'ip', usage: M, type: String, length: 50 }
