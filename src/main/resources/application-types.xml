@@ -1,0 +1,53 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<types:mule xmlns:types="http://www.mulesoft.org/schema/mule/types">
+  <types:catalog>
+    <types:type name="CalculadoraAdd" format="xml">
+      <types:example format="xml" element="{http://schemas.xmlsoap.org/soap/envelope/}Envelope" location="examples/add.xml"/>
+    </types:type>
+    <types:type name="CalculadoraDivide" format="xml">
+      <types:example format="xml" element="{http://schemas.xmlsoap.org/soap/envelope/}Envelope" location="examples/divide.xml"/>
+    </types:type>
+    <types:type name="CalculadoraMultiply" format="xml">
+      <types:example format="xml" element="{http://schemas.xmlsoap.org/soap/envelope/}Envelope" location="examples/multiply.xml"/>
+    </types:type>
+    <types:type name="CalculadoraSubstract" format="xml">
+      <types:example format="xml" element="{http://schemas.xmlsoap.org/soap/envelope/}Envelope" location="examples/substract.xml"/>
+    </types:type>
+  </types:catalog>
+  <types:enrichment select="#c7bcf70f-622a-416d-a809-2e1068eaf122">
+    <types:processor-declaration>
+      <types:output-event>
+        <types:message>
+          <types:payload type="CalculadoraAdd"/>
+        </types:message>
+      </types:output-event>
+    </types:processor-declaration>
+  </types:enrichment>
+  <types:enrichment select="#9090e91c-68e4-487e-bd76-5195cd7ac8d5">
+    <types:processor-declaration>
+      <types:output-event>
+        <types:message>
+          <types:payload type="CalculadoraDivide"/>
+        </types:message>
+      </types:output-event>
+    </types:processor-declaration>
+  </types:enrichment>
+  <types:enrichment select="#f222658e-1a7a-41ed-8151-542e70968669">
+    <types:processor-declaration>
+      <types:output-event>
+        <types:message>
+          <types:payload type="CalculadoraMultiply"/>
+        </types:message>
+      </types:output-event>
+    </types:processor-declaration>
+  </types:enrichment>
+  <types:enrichment select="#b50519f0-23bd-46c4-a7cb-90d640ecf030">
+    <types:processor-declaration>
+      <types:output-event>
+        <types:message>
+          <types:payload type="CalculadoraSubstract"/>
+        </types:message>
+      </types:output-event>
+    </types:processor-declaration>
+  </types:enrichment>
+</types:mule>
