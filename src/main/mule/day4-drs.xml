@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<flow name="day4-drsFlow" doc:id="81c5ba9e-b862-4783-9b17-d8c6de653d47" >
+		<http:listener doc:name="Listener" doc:id="d25cb37b-4e86-4aae-82a6-6087265c1710" config-ref="HTTP_Listener_config" path="/hello"/>
+		<set-payload value="#[payload]" doc:name="Set Payload" doc:id="2226c1f0-aa17-48ce-b4ce-f25c685decda" />
+		<logger level="INFO" doc:name="Logger" doc:id="3ad5a784-2576-401f-9c75-fb7aa84faa63" message='#[output application/java&#10;---&#10;"Username: " ++ Mule::p("secure::example.username") ++&#10;"--" ++&#10;"Password: " ++ Mule::p("secure::example.password")]'/>
+	</flow>
+</mule>
