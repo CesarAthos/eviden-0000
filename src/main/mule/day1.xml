@@ -1,11 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
-	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
-http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
 	<flow name="day1Flow-http" doc:id="c743b467-111f-417d-9bd1-3973a980fa91" >
 		<http:listener doc:name="Listener" doc:id="280420bf-6290-4fac-82c2-3fdbd90f1935" config-ref="HTTP_Listener_config" path="/helloworld"/>
 		<set-payload value="Hello World" doc:name="Set Payload" doc:id="68351bde-001c-4ef0-9481-de541db578f6" />
+	</flow>
+	<flow name="day1Flow-https" doc:id="4f6350c2-dfb9-4a4d-bed4-bc398482fc7a" >
+		<http:listener doc:name="Listener" doc:id="dc5e0038-21ea-4d41-9158-d82365bd5250" config-ref="HTTPS_Listener_config" path="/helloworld" />
+		<ee:transform doc:name="Transform Message" doc:id="c2912578-a7dd-45f5-a631-65f36240b19d" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	message: "Your https service is created"
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
 	</flow>
 </mule>
