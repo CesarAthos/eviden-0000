@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:file="http://www.mulesoft.org/schema/mule/file"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<flow name="api-exp-mainFlow" doc:id="3c547263-5c2c-49ee-8b8d-ad850a8dd0c7" >
+		<file:listener doc:name="On New or Updated File" doc:id="9eb9d461-c3a5-4323-b92a-0fd29fcbeb28" directory="C:\BRISAS\input" autoDelete="true">
+			<scheduling-strategy >
+				<fixed-frequency frequency="5" timeUnit="SECONDS" />
+			</scheduling-strategy>
+		</file:listener>
+		<http:request method="POST" doc:name="Request" doc:id="887d6787-93ff-4037-9602-a1d58eb25114" config-ref="HTTP_Request_configuration" path="/prc">
+			<http:query-params ><![CDATA[#[output application/java
+---
+{
+	"file_name" : attributes.fileName
+}]]]></http:query-params>
+		</http:request>
+	</flow>
+</mule>
