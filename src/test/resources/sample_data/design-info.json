@@ -1,0 +1,16 @@
+{
+  "sampleData": {
+    "c7428499-c864-4986-a9e5-8081ecf3de50": {
+      "attributes": "sample_data/httprequestattributes.dwl"
+    },
+    "f32f487f-5b14-4022-96f9-27a4c61b92f9": {
+      "attributes": "sample_data/HttpRequestAttributes_1.dwl"
+    },
+    "090d5f15-8fb7-4485-812a-51cd1d5253d7": {
+      "payload": "sample_data/dataset.xml"
+    },
+    "1af3de73-4234-4827-bcf6-13c1c90b34b3": {
+      "payload": "sample_data/list_csv.csv"
+    }
+  }
+}

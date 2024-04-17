@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="api-prc-mainFlow" doc:id="d4c5c46b-c864-44da-9470-660e25420433" >
+		<http:listener doc:name="Listener" doc:id="480d79e5-9b90-4daf-b4d6-703246a28d6c" config-ref="HTTP_Listener_config" path="/*" allowedMethods="POST"/>
+		<set-variable value='#[%dw 2.0&#10;output application/java&#10;import substringBeforeLast from dw::core::Strings&#10;---&#10;substringBeforeLast(attributes.queryParams.file_name,".")]' doc:name="Set Variable fileName" doc:id="c7428499-c864-4986-a9e5-8081ecf3de50" variableName="fileName" />
+		<set-variable value='#[%dw 2.0&#10;output application/java&#10;import substringAfterLast from dw::core::Strings&#10;---&#10;substringAfterLast(attributes.queryParams.file_name,".")]' doc:name="Set Variable fileType" doc:id="cb956634-d399-493f-8e44-bacb727b4ecc" variableName="fileType" />
+		<choice doc:name="Choice" doc:id="32095035-3ebb-4d76-ba2c-9711a4c75cf2" >
+			<when expression='#[lower(vars.fileType) == "xml"]'>
+				<ee:transform doc:name="Transform Message" doc:id="090d5f15-8fb7-4485-812a-51cd1d5253d7">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output application/csv
+---
+payload.dataset.*record map ( record , indexOfRecord ) -> {
+	id: record.id,
+	name: record.name default "",
+	description: record.description default "",
+	direccion: record.direccion default "",
+	sexo: record.sexo default "",
+	CP: record.CP default ""
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+				<set-variable value='#[vars.fileName as String ++ ".csv"]' doc:name="Set Variable fileName" doc:id="d2e7f527-f037-4081-a067-5d5a34b7bf40" variableName="fileName" />
+			</when>
+			<when expression='lower(vars.fileType) == "csv"'>
+				<ee:transform doc:name="Transform Message" doc:id="1af3de73-4234-4827-bcf6-13c1c90b34b3">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output text/csv
+---
+payload
+]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+				<set-variable value='#[vars.fileName as String ++ ".txt"]' doc:name="Set Variable fileName" doc:id="2e6fe3da-1817-483a-bbe6-9c91f40a5f73" variableName="fileName" />
+			</when>
+			<otherwise >
+				<raise-error doc:name="Raise error" doc:id="cacf0d89-90b5-40a9-ac4a-407e6f4628fe" type="APP:NOT_SUPPORTED" description="Unsupported file type"/>
+			</otherwise>
+		</choice>
+		<http:request method="POST" doc:name="Request" doc:id="c13b25d0-12bc-401e-a65c-4dfdae3c2a43" config-ref="HTTP_Request_configuration" path="/sys">
+			<http:query-params ><![CDATA[#[output application/java
+---
+{
+	"file_name" : vars.fileName
+}]]]></http:query-params>
+		</http:request>
+	</flow>
+</mule>
