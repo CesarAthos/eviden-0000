@@ -28,4 +28,5 @@ http://www.mulesoft.org/schema/mule/spring http://www.mulesoft.org/schema/mule/s
 	<spring:security-manager doc:name="Spring Security manager" doc:id="eac5f23f-6980-4246-8e0f-40141bd306ba" >
 		<spring:delegate-security-provider name="security-provider" delegate-ref="authenticationManager"/>
 	</spring:security-manager>
+	<configuration doc:name="Configuration" doc:id="3d6b8d01-9e62-4498-ac53-c00c0bc168d0" defaultErrorHandler-ref="global_error_handlerError" />
 </mule>

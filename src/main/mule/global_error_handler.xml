@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
+	<error-handler name="global_error_handlerError" doc:id="ff3573de-10af-4ca1-8802-59be89f3887e" >
+		<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="e0cdffa7-d64d-4c9e-a4fb-8d02a5ab26fa" type="ANY">
+			<set-payload value='#[output application/json&#10;---&#10;{&#10;	"errorType": 		error.errorType,&#10;	"errorDescription": error.description,&#10;	"statusCode":		error.attributes.statusCode default 500,&#10;	"Layer": "SYSTEM",&#10;	"level": vars.level,&#10;	"dateTime": now () &gt;&gt; "Europe/Madrid"&#10;}]' doc:name="Extract Error Details" doc:id="051c5df2-3e9f-494a-957f-931f07461e7e" />
+			<logger level="INFO" doc:name="Error Logger" doc:id="e0da79e6-d111-4a7f-b8df-6a2df1b254cb" message='#[payload]' />
+		</on-error-propagate>
+	</error-handler>
+</mule>
