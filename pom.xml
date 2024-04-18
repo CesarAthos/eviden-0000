@@ -2,19 +2,23 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.mycompany</groupId>
-	<artifactId>starter-mules-project</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<groupId>42ed1847-635b-4217-8d81-a63b434a504c</groupId>
+	<artifactId>bgi-starter-template</artifactId>
+	<version>1.0.2</version>
 	<packaging>mule-application</packaging>
 
-	<name>starter-mules-project</name>
+	<name>api-start-template</name>
 
+	<description>template for start all BGI projects</description>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
 		<app.runtime>4.5.1</app.runtime>
-		<mule.maven.plugin.version>4.0.0</mule.maven.plugin.version>
+		<mule.maven.plugin.version>4.1.0</mule.maven.plugin.version>
+		<tags/>
+		<categories>[]</categories>
+		<fields>[]</fields>
 	</properties>
 
 	<build>
@@ -29,6 +33,9 @@
 				<artifactId>mule-maven-plugin</artifactId>
 				<version>${mule.maven.plugin.version}</version>
 				<extensions>true</extensions>
+				<configuration>
+					<classifier>mule-application</classifier>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
@@ -52,7 +59,7 @@
 		<repository>
 			<id>anypoint-exchange-v3</id>
 			<name>Anypoint Exchange</name>
-			<url>https://maven.anypoint.mulesoft.com/api/v3/maven</url>
+			<url>https://maven.eu1.anypoint.mulesoft.com/api/v3/maven</url>
 			<layout>default</layout>
 		</repository>
 		<repository>
