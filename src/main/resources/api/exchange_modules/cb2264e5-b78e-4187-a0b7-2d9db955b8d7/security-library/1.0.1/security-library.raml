@@ -1,0 +1,28 @@
+#%RAML 1.0 Library
+usage: |
+  This library defines standard security schemes for APIs.
+
+securitySchemes:
+  basicAuth:
+    description: Basic Authentication scheme.
+    type: Basic Authentication
+
+  jwt:
+    description: JSON Web Token (JWT) scheme.
+    type: x-jwt
+
+  oauth2:
+    description: OAuth 2.0 Authorization Framework.
+    type: OAuth 2.0
+    describedBy:
+      headers:
+        Authorization:
+          description: |
+            Used to send the OAuth 2.0 access token.
+          type: string
+          required: true
+    settings:
+      authorizationUri: https://example.com/oauth/authorize
+      accessTokenUri: https://example.com/oauth/token
+      authorizationGrants: 
+        - client_credentials

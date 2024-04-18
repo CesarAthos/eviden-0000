@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns:spring="http://www.mulesoft.org/schema/mule/spring" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd 
+http://www.mulesoft.org/schema/mule/spring http://www.mulesoft.org/schema/mule/spring/current/mule-spring.xsd">       
+      <flow name="eviden-niugis-sys-main">
+        <http:listener config-ref="httpListenerConfig" path="/*" allowedMethods="GET">
+            <http:response statusCode="#[vars.httpStatus default 200]">
+                <http:headers><![CDATA[#[vars.outboundHeaders default {}]]]></http:headers>
+            </http:response>
+            <http:error-response statusCode="#[vars.httpStatus default 500]">
+                <http:body><![CDATA[#[payload]]]></http:body>
+                <http:headers><![CDATA[#[vars.outboundHeaders default {}]]]></http:headers>
+            </http:error-response>
+        </http:listener>
+        <http:basic-security-filter doc:name="Basic security filter" doc:id="3605eedb-8209-46cf-89dc-5e11f9d17f56" realm="mule">
+		</http:basic-security-filter>
+		<spring:authorization-filter doc:name="Authorization filter" doc:id="05ae0219-66d7-49b6-ac8c-70cdc72b73ec" requiredAuthorities="ROLE_ADMIN"/>
+		<apikit:router config-ref="eviden-niugis-sys-config" />
+        <error-handler>
+            <on-error-propagate type="APIKIT:BAD_REQUEST">
+                <ee:transform doc:name="Transform Message">
+                    <ee:message>
+                        <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{message: "Bad request"}]]></ee:set-payload>
+                    </ee:message>
+                    <ee:variables>
+                        <ee:set-variable variableName="httpStatus">400</ee:set-variable>
+                    </ee:variables>
+                </ee:transform>
+            </on-error-propagate>
+            <on-error-propagate type="APIKIT:NOT_FOUND">
+                <ee:transform doc:name="Transform Message">
+                    <ee:message>
+                        <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{message: "Resource not found"}]]></ee:set-payload>
+                    </ee:message>
+                    <ee:variables>
+                        <ee:set-variable variableName="httpStatus">404</ee:set-variable>
+                    </ee:variables>
+                </ee:transform>
+            </on-error-propagate>
+            <on-error-propagate type="APIKIT:METHOD_NOT_ALLOWED">
+                <ee:transform doc:name="Transform Message">
+                    <ee:message>
+                        <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{message: "Method not allowed"}]]></ee:set-payload>
+                    </ee:message>
+                    <ee:variables>
+                        <ee:set-variable variableName="httpStatus">405</ee:set-variable>
+                    </ee:variables>
+                </ee:transform>
+            </on-error-propagate>
+            <on-error-propagate type="ANY" enableNotifications="true" logException="true">
+                <ee:transform doc:name="Transform Message">
+                    <ee:message>
+                        <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{message: "Not acceptable"}]]></ee:set-payload>
+                    </ee:message>
+                    <ee:variables>
+                        <ee:set-variable variableName="httpStatus">406</ee:set-variable>
+                    </ee:variables>
+                </ee:transform>
+            </on-error-propagate>
+            <on-error-propagate type="APIKIT:UNSUPPORTED_MEDIA_TYPE">
+                <ee:transform doc:name="Transform Message">
+                    <ee:message>
+                        <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{message: "Unsupported media type"}]]></ee:set-payload>
+                    </ee:message>
+                    <ee:variables>
+                        <ee:set-variable variableName="httpStatus">415</ee:set-variable>
+                    </ee:variables>
+                </ee:transform>
+            </on-error-propagate>
+            <on-error-propagate type="APIKIT:NOT_IMPLEMENTED">
+                <ee:transform doc:name="Transform Message">
+                    <ee:message>
+                        <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{message: "Not Implemented"}]]></ee:set-payload>
+                    </ee:message>
+                    <ee:variables>
+                        <ee:set-variable variableName="httpStatus">501</ee:set-variable>
+                    </ee:variables>
+                </ee:transform>
+            </on-error-propagate>
+        </error-handler>
+    </flow>
+    <flow name="eviden-niugis-sys-console">
+        <http:listener config-ref="httpListenerConfig" path="/console/*">
+            <http:response statusCode="#[vars.httpStatus default 200]">
+                <http:headers><![CDATA[#[vars.outboundHeaders default {}]]]></http:headers>
+            </http:response>
+            <http:error-response statusCode="#[vars.httpStatus default 500]">
+                <http:body><![CDATA[#[payload]]]></http:body>
+                <http:headers><![CDATA[#[vars.outboundHeaders default {}]]]></http:headers>
+            </http:error-response>
+        </http:listener>
+        <apikit:console config-ref="eviden-niugis-sys-config" />
+        <error-handler>
+            <on-error-propagate type="APIKIT:NOT_FOUND">
+                <ee:transform doc:name="Transform Message">
+                    <ee:message>
+                        <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{message: "Resource not found"}]]></ee:set-payload>
+                    </ee:message>
+                    <ee:variables>
+                        <ee:set-variable variableName="httpStatus">404</ee:set-variable>
+                    </ee:variables>
+                </ee:transform>
+            </on-error-propagate>
+        </error-handler>
+    </flow>
+    <flow name="get:\v1\bcr:eviden-niugis-sys-config">
+		<flow-ref doc:name="Flow Reference" doc:id="e103ce6b-922d-4ce9-b437-2c646d26f12e" name="bcrFlow"/>
+		<logger level="INFO" message="get:\v1\bcr:eviden-niugis-sys-config" />
+    </flow>
+    <flow name="get:\v1\health:eviden-niugis-sys-config">
+        <logger level="INFO" message='#[output application/java&#10;---&#10;"user: " ++ Mule::p("secure::niugis.username")]' />
+		<flow-ref doc:name="Flow Reference" doc:id="598081e1-4735-4068-9cb6-126b11fff3ae" name="healthFlow"/>
+    </flow>
+    <flow name="get:\v1\highways:eviden-niugis-sys-config">
+		<flow-ref doc:name="Flow Reference" doc:id="4edf1a54-fc62-45cb-9020-64b2fb741ad4" name="highwaysFlow"/>
+    </flow>
+    <flow name="get:\v1\nodes\modeling:eviden-niugis-sys-config">
+        <logger level="INFO" message="get:\v1\nodes\modeling:eviden-niugis-sys-config" />
+		<flow-ref doc:name="Flow Reference" doc:id="f305e86f-dafa-40f0-9996-2f4e22cc5ad9" name="modeling-idFlow"/>
+    </flow>
+    <flow name="get:\v1\nodes:eviden-niugis-sys-config" doc:id="220ed451-aff2-46e4-a540-308bd5d3035a">
+        <logger level="INFO" message="get:\v1\nodes:eviden-niugis-sys-config" />
+		<flow-ref doc:name="Flow Reference" doc:id="9fde2399-2af9-4eed-8b05-1f59d2c182a4" name="get:\v1\nodes:eviden-niugis-sys-config"/>
+    </flow>
+    <flow name="get:\v1\services:eviden-niugis-sys-config">
+        <logger level="INFO" message="get:\v1\services:eviden-niugis-sys-config" />
+		<flow-ref doc:name="Flow Reference" doc:id="f05352d9-d519-4167-9096-164e6e3b71e7" name="servicesFlow"/>
+    </flow>
+    <flow name="get:\v1\tolls:eviden-niugis-sys-config">
+		<flow-ref doc:name="Flow Reference" doc:id="187b0802-d758-4bc6-8cf4-ca68dcc454f0" name="tollsFlow"/>
+    </flow>
+    <flow name="get:\v1\underlines:eviden-niugis-sys-config">
+        <logger level="INFO" message="get:\v1\underlines:eviden-niugis-sys-config" />
+		<flow-ref doc:name="Flow Reference" doc:id="b5572243-83d8-486d-a135-d8d0c1e0f159" name="underlinesFlow"/>
+    </flow>
+    <flow name="get:\v1\underlines\(id):eviden-niugis-sys-config">
+		<flow-ref doc:name="Flow Reference" doc:id="3760f5a1-9163-494d-bfec-d52946ee5e13" name="underlines-idFlow"/>
+    </flow>
+    <flow name="get:\v1\bcr\(id):eviden-niugis-sys-config">
+		<flow-ref doc:name="Flow Reference" doc:id="2667d8c0-d645-4735-8405-da7781d311a3" name="bcr-idFlow"/>
+    </flow>
+    <flow name="get:\v1\tolls\(id):eviden-niugis-sys-config">
+		<flow-ref doc:name="Flow Reference" doc:id="0b9a856f-9bd3-465b-9fc8-b3346a1c45b4" name="tolls-idFlow"/>
+    </flow>
+    <flow name="get:\v1\highways\(id):eviden-niugis-sys-config">
+		<flow-ref doc:name="Flow Reference" doc:id="d0459602-4ad6-4339-8864-7d5288287223" name="highways-idFlow"/>
+    </flow>
+    <flow name="get:\v1\nodes\(id):eviden-niugis-sys-config">
+		<flow-ref doc:name="Flow Reference" doc:id="2e33d184-c91d-451d-be1b-5cc52dcdfdd9" name="nodes-idFlow"/>
+    </flow>
+    <flow name="get:\v1\services\(id):eviden-niugis-sys-config">
+		<flow-ref doc:name="Flow Reference" doc:id="0518f9fa-d41b-4db2-bd30-8376ece351c3" name="services-idFlow"/>
+    </flow>
+    <flow name="get:\v1\nodes\modeling\(id):eviden-niugis-sys-config" doc:id="c1fc6fd5-a6ab-424c-8f32-85048660fa50">
+		<flow-ref doc:name="Flow Reference" doc:id="a6d29ebf-0ecb-486f-8103-e1ce7428f963" name="get:\v1\nodes\modeling\(id):eviden-niugis-sys-config"/>
+    </flow>
+</mule>

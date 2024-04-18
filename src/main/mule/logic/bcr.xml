@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<flow name="bcrFlow" doc:id="3d19c116-5ded-449d-b66c-01563b0f2d60" >
+		<http:request method="GET" doc:name="Request" doc:id="81f0d7b1-e529-4ab4-bfe5-16fcf5f709d9" config-ref="HTTP_Request_configuration" path="/zonas_de_paragem_bcr/items" >
+			<http:query-params ><![CDATA[#[output application/java
+---
+{
+	"f" : "json"
+}]]]></http:query-params>
+		</http:request>
+	</flow>
+	<flow name="bcr-idFlow" doc:id="0c5ce4ff-4198-4168-aac7-9db5c8f8f0a4" >
+		<http:request method="GET" doc:name="Request" doc:id="ffceac25-407d-4d6e-b13e-69e04839147e" config-ref="HTTP_Request_configuration" path="/zonas_de_paragem_bcr/items/{id}" >
+			<http:uri-params ><![CDATA[#[output application/java
+---
+{
+	"id" : attributes.uriParams.'id'
+}]]]></http:uri-params>
+			<http:query-params ><![CDATA[#[output application/java
+---
+{
+	"f" : "json"
+}]]]></http:query-params>
+		</http:request>
+	</flow>
+</mule>

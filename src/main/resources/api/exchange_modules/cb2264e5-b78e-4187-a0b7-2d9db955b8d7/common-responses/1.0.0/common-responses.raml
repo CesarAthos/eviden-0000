@@ -1,0 +1,52 @@
+#%RAML 1.0 Trait
+
+responses:
+  200:
+    body:
+      application/json:
+        type: object
+        properties:
+          Code: integer
+          Message: string
+        example: |
+          {"Code": 200, "Message": "Success"}
+
+  201:
+    body:
+      application/json:
+        type: object
+        properties:
+          Code: integer
+          Message: string
+        example: |
+          {"Code": 201, "Message": "Create"}
+
+  400:
+    body:
+      application/json:
+        type: object
+        properties:
+          Code: integer
+          Message: string
+        example: |
+          {"Code": 400, "Message": "Invalid request"}
+
+  401:
+    body:
+      application/json:
+        type: object
+        properties:
+          Code: integer
+          Message: string
+        example: |
+          {"Code": 401, "Message": "Unauthorized"}
+
+  500:
+    body:
+      application/json:
+        type: object
+        properties:
+          Code: integer
+          Message: string
+        example: |
+          {"Code": 500, "Message": "Internal Server Error"}

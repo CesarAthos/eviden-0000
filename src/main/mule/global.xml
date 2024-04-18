@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:spring="http://www.mulesoft.org/schema/mule/spring"
+	xmlns:secure-properties="http://www.mulesoft.org/schema/mule/secure-properties" xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/schema/mule/secure-properties/current/mule-secure-properties.xsd
+http://www.mulesoft.org/schema/mule/spring http://www.mulesoft.org/schema/mule/spring/current/mule-spring.xsd">
+	<apikit:config name="eviden-niugis-sys-config" api="eviden-niugis-sys.raml" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" />
+    <http:listener-config name="httpListenerConfig" basePath="${listenerConfig.basePath}">
+        <http:listener-connection host="${listenerConfig.host}" port="${listenerConfig.port}" />
+    </http:listener-config>
+	<configuration-properties doc:name="Configuration properties" doc:id="da2f519e-e068-46db-9473-59c0843b3e09" file="properties\\${env}-properties.yaml" />
+	<global-property doc:name="Global Property" doc:id="6c04fda6-0637-4e1c-9058-c30059f55683" name="env" value="local" />
+	<secure-properties:config name="Secure_Properties_Config" doc:name="Secure Properties Config" doc:id="3471311f-e465-485f-bdb8-c756feedd9c8" key="${secure.key}" file="properties\\${env}-secure-properties.yaml">
+		<secure-properties:encrypt algorithm="Blowfish" />
+	</secure-properties:config>
+	<http:request-config name="HTTP_Request_configuration" doc:name="HTTP Request configuration" doc:id="99d3345e-b5eb-449b-a898-79b6a0398704" basePath="${requestConfig.basePath}" responseTimeout="${requestConfig.timeout}">
+		<http:request-connection host="${requestConfig.host}" protocol="HTTPS">
+			<http:authentication >
+				<http:basic-authentication username="${secure::niugis.username}" password="${secure::niugis.password}"/>
+			</http:authentication>
+		</http:request-connection>
+	</http:request-config>
+	<spring:config name="Spring_Config" doc:name="Spring Config" doc:id="3595da07-6216-4b77-9a5c-258edec4402a" files="beans.xml" />
+	<spring:security-manager doc:name="Spring Security manager" doc:id="eac5f23f-6980-4246-8e0f-40141bd306ba" >
+		<spring:delegate-security-provider name="security-provider" delegate-ref="authenticationManager"/>
+	</spring:security-manager>
+</mule>

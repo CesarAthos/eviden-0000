@@ -1,0 +1,33 @@
+{
+  "dependencies": [
+    {
+      "version": "1.0.0",
+      "assetId": "health-check",
+      "groupId": "cb2264e5-b78e-4187-a0b7-2d9db955b8d7",
+      "provided": false
+    },
+    {
+      "version": "1.0.0",
+      "assetId": "common-responses",
+      "groupId": "cb2264e5-b78e-4187-a0b7-2d9db955b8d7",
+      "provided": false
+    },
+    {
+      "version": "1.0.1",
+      "assetId": "security-library",
+      "groupId": "cb2264e5-b78e-4187-a0b7-2d9db955b8d7",
+      "provided": false
+    }
+  ],
+  "version": "1.0.0",
+  "descriptorVersion": "1.0.0",
+  "classifier": "raml",
+  "main": "eviden-niugis-sys.raml",
+  "assetId": "eviden-niugis-sys",
+  "groupId": "cb2264e5-b78e-4187-a0b7-2d9db955b8d7",
+  "name": "eviden-niugis-sys",
+  "organizationId": "cb2264e5-b78e-4187-a0b7-2d9db955b8d7",
+  "apiVersion": "v1",
+  "tags": [],
+  "originalFormatVersion": "1.0"
+}

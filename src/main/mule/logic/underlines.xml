@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<flow name="underlinesFlow" doc:id="317eab8a-e8a9-4502-b045-e82e454a11d5" >
+		<http:request method="GET" doc:name="Request" doc:id="929dbd99-4a9e-4296-bd9a-74d2193e9315" config-ref="HTTP_Request_configuration" path="/sublancos/items" >
+			<http:query-params ><![CDATA[#[output application/java
+---
+{
+	"f" : "json"
+}]]]></http:query-params>
+		</http:request>
+	</flow>
+	<flow name="underlines-idFlow" doc:id="07436ac1-3fa9-47db-8cd6-33946a7c3bce" >
+		<http:request method="GET" doc:name="Request" doc:id="916b63ea-49e4-4d4c-9827-6bd2ccc89a01" config-ref="HTTP_Request_configuration" path="/sublancos/items/{id}" >
+			<http:uri-params ><![CDATA[#[output application/java
+---
+{
+	"id" : attributes.uriParams.'id'
+}]]]></http:uri-params>
+			<http:query-params ><![CDATA[#[output application/java
+---
+{
+	"f" : "json"
+}]]]></http:query-params>
+		</http:request>
+	</flow>
+</mule>

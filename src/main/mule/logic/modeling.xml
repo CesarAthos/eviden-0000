@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<flow name="modeling-idFlow" doc:id="c99a2c23-41e4-4a6c-9e5c-9ab90e30d645" >
+		<http:request method="GET" doc:name="Request" doc:id="6aa30ade-bc4a-4040-925c-a0693772d773" config-ref="HTTP_Request_configuration" path="/modelacao_dos_nos/items/{id}" >
+			<http:uri-params ><![CDATA[#[output application/java
+---
+{
+	"id" : attributes.uriParams.'id'
+}]]]></http:uri-params>
+			<http:query-params ><![CDATA[#[output application/java
+---
+{
+	"f" : "json"
+}]]]></http:query-params>
+		</http:request>
+	</flow>
+	<flow name="modelingFlow" doc:id="14f16699-6644-4e8c-92e2-f286412d80d9" >
+		<http:request method="GET" doc:name="Request" doc:id="a83540ef-f8ac-450d-bdc3-a1f4d4e042d8" config-ref="HTTP_Request_configuration" path="/modelacao_dos_nos/items" >
+			<http:query-params ><![CDATA[#[output application/java
+---
+{
+	"f" : "json"
+}]]]></http:query-params>
+		</http:request>
+	</flow>
+</mule>

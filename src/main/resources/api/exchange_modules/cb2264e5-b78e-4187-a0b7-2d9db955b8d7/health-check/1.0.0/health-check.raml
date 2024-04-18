@@ -1,0 +1,26 @@
+#%RAML 1.0 Trait
+traits:
+  healthCheck:
+    is: [ResourceType]
+    description: |
+      Trait for implementing a health check endpoint.
+    get:
+      description: Check the health of the service.
+      responses:
+        200:
+          description: Service is healthy.
+          body:
+            application/json:
+              example: |
+                {
+                  "status": "healthy"
+                }
+        503:
+          description: Service is unhealthy.
+          body:
+            application/json:
+              example: |
+                {
+                  "status": "unhealthy",
+                  "error": "Service is down"
+                }

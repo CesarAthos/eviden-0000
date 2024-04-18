@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<flow name="tolls-idFlow" doc:id="7843c6f2-fe21-41c3-80df-678ad20d1af6" >
+		<http:request method="GET" doc:name="Request" doc:id="2267c2e5-1677-4857-be36-dcbd1e32937b" config-ref="HTTP_Request_configuration" path="/barreiras_de_portagem/items/{id}" >
+			<http:uri-params ><![CDATA[#[output application/java
+---
+{
+	"id" : attributes.uriParams.'id'
+}]]]></http:uri-params>
+			<http:query-params ><![CDATA[#[output application/java
+---
+{
+	"f" : "json"
+}]]]></http:query-params>
+		</http:request>
+	</flow>
+	<flow name="tollsFlow" doc:id="9257f9fd-2bff-41e2-b843-6895e16220ad" >
+		<http:request method="GET" doc:name="Request" doc:id="1f5d4cf1-f565-43e1-bc88-5bf59fe7477d" config-ref="HTTP_Request_configuration" path="/barreiras_de_portagem/items" >
+			<http:query-params ><![CDATA[#[output application/java
+---
+{
+	"f" : "json"
+}]]]></http:query-params>
+		</http:request>
+	</flow>
+</mule>

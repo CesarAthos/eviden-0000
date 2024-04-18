@@ -1,0 +1,159 @@
+#%RAML 1.0
+title: Niugis Mock
+
+baseUri: http://{domain}/api
+
+uses:
+  security: /exchange_modules/cb2264e5-b78e-4187-a0b7-2d9db955b8d7/security-library/1.0.1/security-library.raml
+
+traits:
+  common-responses: !include /exchange_modules/cb2264e5-b78e-4187-a0b7-2d9db955b8d7/common-responses/1.0.0/common-responses.raml
+  health: !include /exchange_modules/cb2264e5-b78e-4187-a0b7-2d9db955b8d7/health-check/1.0.0/health-check.raml
+
+/v1:
+  /health:
+    get:
+      description: Check the health of the service.
+      responses:
+        200:
+          description: Service is healthy.
+          body:
+            application/json:
+              type: 
+  
+        503:
+          description: Service is unhealthy.
+          body:
+            application/json:
+              type: 
+
+  /services:
+    get:
+      securedBy: [security.basicAuth]
+      description: "This is a location and an aggregator of existing building assets in a given Service Area. It aggregates all the existing buildings in a Service Area, providing information on: 1) their reversion status; 2) the different areas of responsibility (BCR/BAS, Petrol Stores, Fastfood, Hotel units and Auto Workshops); 3) Services provided and 4) Floor plans defining the areas of responsibility of BCR/BAS and Petrol Stores."
+      responses:
+        200:
+          body:
+            application/json:
+              type: 
+    /{id}:
+      get:
+        securedBy: [security.basicAuth]
+        description: for one service info as 1) their reversion status; 2) the different areas of responsibility (BCR/BAS, Petrol Stores, Fastfood, Hotel units and Auto Workshops); 3) Services provided and 4) Floor plans defining the areas of responsibility of BCR/BAS and Petrol Stores."
+        responses:
+          200:
+            body:
+              application/json:
+                type: 
+  /highways:
+    get:
+      securedBy: [security.basicAuth]
+      description: Highways Brisa list
+      responses:
+        200:
+          body:
+            application/json:
+                type: 
+
+    /{id}:
+      get:
+        securedBy: [security.basicAuth]
+        description: One selected highway by Id
+        responses:
+          200:
+            body:
+              application/json:
+                type: 
+  /tolls:
+    get:
+      securedBy: [security.basicAuth]
+      description: "It is a location and an aggregating element. It brings together all the structures and pedestrian circulation areas that form part of or border a main or connecting road and are an integral part of a Toll Plaza. They include the roof structure (Toll Plaza), Islands and Lanes and the Service Tunnel (when present). Also excluded are associated or independent structures such as pedestrian crossings, which belong to the Works of Art asset class."
+      responses:
+        200:
+          body:
+            application/json:
+              type: 
+    /{id}:
+      get:
+        securedBy: [security.basicAuth]
+        description: One selected pedestrian by Id
+        responses:
+          200:
+            body:
+              application/json:
+                type: 
+  /nodes:
+    get:
+      securedBy: [security.basicAuth]
+      description: Nodes Brisa features
+      responses:
+        200:
+          body:
+            application/json:
+               type: 
+    /{id}:
+      get:
+        securedBy: [security.basicAuth]
+        description: One selected highway by Id
+        responses:
+          200:
+            body:
+              application/json:
+                 type: 
+    /modeling:
+     get:
+      securedBy: [security.basicAuth]
+      description: "Node Branch Metadata"
+      responses:
+        200:
+          body:
+            application/json:
+              type: 
+     /{id}:
+        get:
+          securedBy: [security.basicAuth]
+          description: One selected pedestrian by Id
+          responses:
+            200:
+              body:
+                application/json:
+                  type: 
+  /underlines:
+    get:
+      securedBy: [security.basicAuth]
+      description: "Underlines features"
+      responses:
+        200:
+          body:
+            application/json:
+             type: 
+    /{id}:
+      get:
+        securedBy: [security.basicAuth]
+        description: One selected pedestrian by Id
+        responses:
+          200:
+            body:
+              application/json:
+                type: 
+  /bcr:
+    get:
+      securedBy: [security.basicAuth]
+      description: BCR features
+      responses:
+        200:
+          body:
+            application/json:
+              type: 
+    /{id}:
+      get:
+        securedBy: [security.basicAuth]
+        description: BCR One feature
+        responses:
+          200:
+            body:
+              application/json:
+                type: 
+
+
+
