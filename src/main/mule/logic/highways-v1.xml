@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<flow name="get:\v1\highways:eviden-niugis-sys-config">
+        <logger level="INFO" message="START HIGHWAYS" doc:name="START HIGHWAYS"/>
+		<http:request method="GET" doc:name="Request" doc:id="82d61c97-20db-4347-970e-f08cfad56b27" config-ref="HTTP_Request_configuration" path="${endpoint.highways}"/>
+		<logger level="INFO" doc:name="END HIGHWAYS" doc:id="f0e3b13b-4282-479f-900b-daf17d8ba1d5" message="END HIGHWAYS"/>
+    
+</flow>
+	</mule>

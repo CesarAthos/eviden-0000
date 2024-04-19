@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<flow name="get:\v1\nodes\modeling\(id):eviden-niugis-sys-config">
+        <ee:transform doc:name="Transform Message">
+            <ee:variables>
+                <ee:set-variable variableName="id">attributes.uriParams.'id'</ee:set-variable>
+                <ee:set-variable variableName="format" ><![CDATA[attributes.queryParams.'f' as String default "json"]]></ee:set-variable>
+            </ee:variables>
+        </ee:transform>
+        <logger level="INFO" message="START NODES MODELING ID" doc:name="START NODES MODELING ID"/>
+		<http:request method="GET" doc:name="Request" doc:id="b1615bc7-78a5-4f00-bfbb-7b910f6bf514" config-ref="HTTP_Request_configuration" path="${endpoint.nodesModeling}/{id}" >
+			<http:uri-params ><![CDATA[#[output application/java
+---
+{
+	id : attributes.uriParams.id
+}]]]></http:uri-params>
+			<http:query-params ><![CDATA[#[output application/java
+---
+{
+	"f" : vars.format
+}]]]></http:query-params>
+		</http:request>
+		<logger level="INFO" doc:name="END NODES MODELING ID" doc:id="61298917-c55f-44e1-8fef-8d693756f64d" message="END NODES MODELING ID" />
+    
+</flow>
+	</mule>

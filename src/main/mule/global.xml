@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:secure-properties="http://www.mulesoft.org/schema/mule/secure-properties"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/schema/mule/secure-properties/current/mule-secure-properties.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<configuration-properties doc:name="Configuration properties" doc:id="e0a199c0-c73e-48be-9863-5fd6e9f118cd" file="properties\global-properties.yaml" />
+	<secure-properties:config name="Secure_Properties_Config" doc:name="Secure Properties Config" doc:id="7e01a402-93c7-4b96-b468-d3cc39a37b1c" file="properties/${env}-secure-properties.yaml" key="${secureKey}" >
+		<secure-properties:encrypt algorithm="Blowfish" />
+	</secure-properties:config>
+	<global-property doc:name="Global Property" doc:id="c4426091-9086-4d4d-843d-6a2b56d0a79a" name="secureKey" value="Eviden2024!" />
+	<global-property doc:name="Global Property" doc:id="51f8ee73-294e-432f-ac4f-3811d097a890" name="env" value="local" />
+	<configuration-properties doc:name="Configuration properties" doc:id="cc7505c9-2fea-4989-8947-604efd692391" file="properties/${env}-properties.yaml" />
+	<http:request-config name="HTTP_Request_configuration" doc:name="HTTP Request configuration" doc:id="e4015b9f-c90b-458e-9672-a27ec9d8e76b" basePath="${request.path}">
+		<http:request-connection host="${request.host}" protocol="HTTPS">
+			<http:authentication >
+				<http:basic-authentication username="${secure::secureProperties.http.request.clientID}" password="${secure::secureProperties.http.request.password}" />
+			</http:authentication>
+		</http:request-connection>
+	</http:request-config>
+	<configuration-properties doc:name="Configuration properties" doc:id="0a6339f0-460d-49fb-9267-d8337dcec493" file="properties\commons-properties.yaml" />
+	<configuration doc:name="Configuration" doc:id="a36e7940-f1c7-41fa-b54c-67facd5af187" defaultErrorHandler-ref="global_error_handlerError" />
+</mule>

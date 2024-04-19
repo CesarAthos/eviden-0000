@@ -16,13 +16,17 @@ secureProperties:
     # Alias de la propiedad
     alias: database.url
     # Valor encriptado de la propiedad
-    value: !secure "ENCRYPTED_VALUE_1"
+    value: "ENCRYPTED_VALUE_1"
 
   # Database secure passwords
   dbPassword:
     # Alias de la propiedad
     alias: database.password
     # Valor encriptado de la propiedad
-    value: !secure "ENCRYPTED_VALUE_2"
+    value: "ENCRYPTED_VALUE_2"
 
   # Other configurations
+  http:
+    request:
+      clientID: "![JW7S6qnBU2A==]"
+      password: "![QaZs8U4MGTj+EVl92UX6/A==]"

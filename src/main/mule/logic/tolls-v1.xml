@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<flow name="get:\v1\tolls:eviden-niugis-sys-config">
+        <logger level="INFO" message="START TOOLS" doc:name="START TOOLS "/>
+		<http:request method="GET" doc:name="Request" doc:id="4546129e-e68f-4eb7-aa27-685255ef6b86" config-ref="HTTP_Request_configuration" path="${endpoint.tools}"/>
+		<logger level="INFO" doc:name="END TOOLS " doc:id="d7600991-7825-4ace-9456-638e319197e9" message="END TOOLS"/>
+    
+</flow>
+	</mule>

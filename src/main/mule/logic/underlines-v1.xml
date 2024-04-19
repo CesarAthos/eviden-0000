@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<flow name="get:\v1\underlines:eviden-niugis-sys-config">
+        <logger level="INFO" message="START UNDERLINES" doc:name="START UNDERLINES"/>
+		<http:request method="GET" doc:name="Request" doc:id="1d2c234a-9400-4a23-b03e-ab805a9f6cdf" config-ref="HTTP_Request_configuration" path="${endpoint.underlines}"/>
+		<logger level="INFO" doc:name="END UNDERLINES" doc:id="ec07dd31-521d-45f4-9138-b76297ff041f" message="END UNDERLINES"/>
+    
+</flow>
+	</mule>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
+	<flow name="get:\v1\health:eviden-niugis-sys-config">
+        <logger level="INFO" message="get:\v1\health:eviden-niugis-sys-config" />
+		<set-payload value='#[output application/json&#10;---&#10;{&#10;  "status": "UP",&#10;  "name": "api",&#10;  "datetime": now (),&#10;  "uptime": "3 days 5 hours 20 minutes"&#10;  }]' doc:name="Set Payload" doc:id="44cc741b-44df-4cc6-96e5-c2e55d0b47b7" />
+		<logger level="INFO" doc:name="Logger" doc:id="88d062c8-61f1-4f32-93ba-d5f304f6b911" />
+    
+</flow>
+	</mule>

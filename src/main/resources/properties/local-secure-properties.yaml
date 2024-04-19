@@ -10,19 +10,22 @@ secureProperties:
     username:  ""
     password:  ""
   # Mulesoft secure keys
-  mulesoft:
   # Database secure keys
   database:
     # Alias de la propiedad
-    alias: database.url
+    alias: "database.url"
     # Valor encriptado de la propiedad
-    value: !secure "ENCRYPTED_VALUE_1"
+    value: "ENCRYPTED_VALUE_1"
 
   # Database secure passwords
   dbPassword:
     # Alias de la propiedad
-    alias: database.password
+    alias: "database.password"
     # Valor encriptado de la propiedad
-    value: !secure "ENCRYPTED_VALUE_2"
+    value: "ENCRYPTED_VALUE_2"
 
   # Other configurations
+  http:
+    request:
+      clientID: "![t06dG+71sV8=]"
+      password: "![atdO16Ai5Fj7mCkA3a3mWw==]"

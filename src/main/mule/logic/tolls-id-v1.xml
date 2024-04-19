@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	
+	
+    <flow name="get:\v1\tolls\(id):eviden-niugis-sys-config">
+        <ee:transform doc:name="Transform Message">
+            <ee:variables>
+                <ee:set-variable variableName="id">attributes.uriParams.'id'</ee:set-variable>
+                <ee:set-variable variableName="format" ><![CDATA[attributes.queryParams.'f' as String default "json"]]></ee:set-variable>
+            </ee:variables>
+        </ee:transform>
+        <logger level="INFO" message="START TOOLS ID" doc:name="START TOOLS ID"/>
+		<http:request method="GET" doc:name="Request" doc:id="a92f9bbd-5792-449e-9ee8-c12bbc2eee13" config-ref="HTTP_Request_configuration" path="${endpoint.tools}/{id}" >
+			<http:uri-params ><![CDATA[#[output application/java
+---
+{
+	id : attributes.uriParams.id
+}]]]></http:uri-params>
+			<http:query-params ><![CDATA[#[output application/java
+---
+{
+	"f" : vars.format
+}]]]></http:query-params>
+		</http:request>
+		<logger level="INFO" doc:name="END TOOLS ID" doc:id="dd722207-a120-4df9-b488-d205f0eb583e" message="END TOOLS ID" />
+    
+</flow>
+	</mule>

@@ -1,0 +1,8 @@
+endpoint:
+  bcr: "/zonas_de_paragem_bcr/items"
+  highways: "/autoestradas_to_be/items"
+  nodes: "/nos/items"
+  nodesModeling: "/modelacao_dos_nos/items"
+  services: "/areas_de_servico/items"
+  tools:  "/barreiras_de_portagem/items"
+  underlines: "/sublancos/items"
