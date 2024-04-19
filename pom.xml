@@ -7,7 +7,7 @@
 	<version>1.0.2</version>
 	<packaging>mule-application</packaging>
 
-	<name>api-start-template-dev</name>
+	<name>eviden_start_template</name>
 
 	<description>template for start all BGI projects</description>
 	<properties>
