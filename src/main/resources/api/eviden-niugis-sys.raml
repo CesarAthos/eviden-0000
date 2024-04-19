@@ -101,15 +101,15 @@ traits:
               application/json:
                  type: 
     /modeling:
-     get:
-      securedBy: [security.basicAuth]
-      description: "Node Branch Metadata"
-      responses:
-        200:
-          body:
-            application/json:
-              type: 
-     /{id}:
+      get:
+        securedBy: [security.basicAuth]
+        description: "Node Branch Metadata"
+        responses:
+          200:
+            body:
+              application/json:
+                type: 
+      /{id}:
         get:
           securedBy: [security.basicAuth]
           description: One selected pedestrian by Id

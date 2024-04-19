@@ -27,4 +27,27 @@ http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/htt
 }]]]></http:query-params>
 		</http:request>
 	</flow>
+	<flow name="nodes-modeling-idFlow" doc:id="e67fb695-88a7-4ffc-bbac-9b0fb8cd3bbf" >
+		<http:request method="GET" doc:name="Request" doc:id="85c423d8-eae2-4b8d-993e-d82319bbe6e4" config-ref="HTTP_Request_configuration" path="/modelacao_dos_nos/items/{id}" >
+			<http:uri-params ><![CDATA[#[output application/java
+---
+{
+	"id" : attributes.uriParams.'id'
+}]]]></http:uri-params>
+			<http:query-params ><![CDATA[#[output application/java
+---
+{
+	"f" : "json"
+}]]]></http:query-params>
+		</http:request>
+	</flow>
+	<flow name="nodes-modelingFlow" doc:id="843923f2-c2bf-4912-8c11-62265062a20c" >
+		<http:request method="GET" doc:name="Request" doc:id="259298be-6bc9-45e9-a97e-312bd1f131a4" config-ref="HTTP_Request_configuration" path="/modelacao_dos_nos/items" >
+			<http:query-params ><![CDATA[#[output application/java
+---
+{
+	"f" : "json"
+}]]]></http:query-params>
+		</http:request>
+	</flow>
 </mule>

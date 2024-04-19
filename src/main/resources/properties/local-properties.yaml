@@ -1,3 +1,5 @@
+app:
+  layer: "SYSTEM"
 # Configuración del Listener HTTP
 listenerConfig:
   name: httpListenerConfig
