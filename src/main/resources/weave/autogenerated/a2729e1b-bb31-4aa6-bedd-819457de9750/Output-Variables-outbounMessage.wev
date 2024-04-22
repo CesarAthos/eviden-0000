@@ -1,0 +1,4 @@
+%dw 2.0
+
+type auto_a2729e1b_bb31_4aa6_bedd_819457de9750_Output_Variables_outbounMessage = Any
+

@@ -11,6 +11,7 @@ http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/htt
 				<fixed-frequency frequency="5" timeUnit="SECONDS" />
 			</scheduling-strategy>
 		</file:listener>
+		<flow-ref doc:name="Flow Reference" doc:id="0b36d3fc-3f19-427e-9e83-be5601ee3ddb" name="utilFlow"/>
 		<http:request method="POST" doc:name="Request" doc:id="887d6787-93ff-4037-9602-a1d58eb25114" config-ref="HTTP_Request_configuration" path="/prc">
 			<http:query-params ><![CDATA[#[output application/java
 ---

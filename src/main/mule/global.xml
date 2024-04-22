@@ -8,4 +8,6 @@ http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/htt
 	<http:request-config name="HTTP_Request_configuration" doc:name="HTTP Request configuration" doc:id="a0ab0fdc-7124-4870-9b67-60e485a4df27">
 		<http:request-connection host="localhost" port="8081" />
 	</http:request-config>
+	<configuration-properties doc:name="Configuration properties" doc:id="1b0ba432-156c-4862-b972-7ebef37c6254" file="properties\global-properties.yaml" />
+	<configuration doc:name="Configuration" doc:id="c71ab492-7c22-44bf-b53c-d7295901ac39" defaultErrorHandler-ref="global_error_handlerError" />
 </mule>
