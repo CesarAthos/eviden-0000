@@ -6,7 +6,12 @@
 http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
 http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd">
 	<flow name="api-sys-mainFlow" doc:id="08f775df-ed0f-40c8-a2ef-5bc0ad2ad8d2" >
-		<http:listener doc:name="Listener" doc:id="91a3a07a-d938-4f17-9c3e-1a15920b4bf0" config-ref="HTTP_Listener_config" path="/*"/>
+		<http:listener doc:name="Listener" doc:id="91a3a07a-d938-4f17-9c3e-1a15920b4bf0" config-ref="HTTP_Listener_config" path="/*">
+			<http:error-response >
+				<http:body ><![CDATA[#[output application/json --- payload]]]></http:body>
+			</http:error-response>
+		</http:listener>
+		<flow-ref doc:name="Flow Reference" doc:id="d123b71a-4a9a-4c73-abde-3f1826d622f2" name="utilFlow" />
 		<file:write doc:name="Write" doc:id="e0edab09-3acf-4d04-9ac3-92e693425c80" path='#["C:/BRISAS/ouput/" ++ attributes.queryParams.file_name as String]' config-ref="File_Config"/>
 	</flow>
 </mule>
