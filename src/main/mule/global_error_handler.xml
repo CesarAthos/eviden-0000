@@ -4,11 +4,22 @@
 	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
 http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
-	<error-handler name="global_error_handlerError" doc:id="ff3573de-10af-4ca1-8802-59be89f3887e" >
+	<error-handler name="propagate_global_error_handler" doc:id="ff3573de-10af-4ca1-8802-59be89f3887e" >
 		<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="e0cdffa7-d64d-4c9e-a4fb-8d02a5ab26fa" type="ANY">
-			<set-payload value='#[import * from modules::errorsMapping&#10;output application/json&#10;---&#10;customizedError(error,mapidenERRORToHttpError(error.errorType.identifier default " "), vars.level)]' doc:name="Set Error Details" doc:id="b8355226-7831-454e-bd16-5c4a9d3d942b" />
+			<set-payload value='#[%dw 2.0&#10;import * from modules::errorsMapping&#10;output application/json&#10;var errorTypeValue = error.errorType default {}&#10;var layerValue = error.errorMessage.payload.errorType.layer default Mule::p("app.layer")&#10;var identifierValue = error.errorType.identifier default ""&#10;var httpError = mapidenERRORToHttpError(identifierValue)&#10;var levelValue = vars.level as String default "1"&#10;---&#10;{&#10;	"errorType": (errorTypeValue ++ {&#10;		"layer": layerValue}),&#10;	"errorDescription": error.description,&#10;	"errorCode": error.muleMessage.attributes.StatusCode,&#10;	"level": levelValue,&#10;	"customError": httpError ++ {&#10;		"location": levelValue ++ " " ++ layerValue,&#10;		"dateTime": now () &gt;&gt; "Europe/Madrid"&#10;	}&#10;}]' doc:name="Set Error Details" doc:id="b8355226-7831-454e-bd16-5c4a9d3d942b" />
 			<logger level="INFO" doc:name="Error Logger" doc:id="e0da79e6-d111-4a7f-b8df-6a2df1b254cb" message='#[payload.customError]' />
 		
 </on-error-propagate>
 	</error-handler>
+	<error-handler name="propagate_global_error_handler_no_trace" doc:id="61197c84-0ff0-43a9-af35-416c38237fcc" >
+		<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="2f8be6d7-0a47-48c4-8513-97fc3d49a7ce" type="ANY">
+			<logger level="DEBUG" doc:name="Logger" doc:id="724e46f1-8070-4268-bdf0-0c05e83d18e9" message="Error propagates without modifying payload and registry"/>
+		</on-error-propagate>
+	</error-handler>
+	<error-handler name="continue_global_error_handler" doc:id="4220812d-ff40-4d3b-9669-78770858ae92" >
+		<on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" doc:id="6ecb2687-65ec-492d-b8eb-35c5968d454f" type="ANY">
+			<logger level="INFO" doc:name="Error Logger" doc:id="f84ea5c8-6b6c-433d-b789-f1fe1ad06972" message='#[%dw 2.0&#10;import * from modules::errorsMapping&#10;output application/json&#10;var layerValue = error.errorMessage.payload.errorType.layer default Mule::p("app.layer")&#10;var identifierValue = error.errorType.identifier default ""&#10;var httpError = mapidenERRORToHttpError(identifierValue)&#10;var levelValue = vars.level as String default "1"&#10;---&#10;{&#10;	"customError": httpError ++ {&#10;		"location": levelValue ++ " " ++ layerValue,&#10;		"dateTime": now () &gt;&gt; "Europe/Madrid"&#10;	}&#10;}]' />
+		</on-error-continue>
+	</error-handler>
+
 </mule>

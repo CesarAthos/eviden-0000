@@ -19,5 +19,6 @@ http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/htt
 	"file_name" : attributes.fileName
 }]]]></http:query-params>
 		</http:request>
+		<error-handler ref="propagate_global_error_handler" />
 	</flow>
 </mule>
