@@ -16,22 +16,8 @@ http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/
 		<set-variable value='#[%dw 2.0&#10;output application/java&#10;import substringAfterLast from dw::core::Strings&#10;---&#10;substringAfterLast(attributes.queryParams.file_name,".")]' doc:name="Set Variable fileType" doc:id="cb956634-d399-493f-8e44-bacb727b4ecc" variableName="fileType" />
 		<choice doc:name="Choice" doc:id="32095035-3ebb-4d76-ba2c-9711a4c75cf2" >
 			<when expression='#[lower(vars.fileType) == "xml"]'>
-				<ee:transform doc:name="Transform Message" doc:id="090d5f15-8fb7-4485-812a-51cd1d5253d7">
-			<ee:message>
-				<ee:set-payload><![CDATA[%dw 2.0
-output application/csv
----
-payload.dataset.*record map ( record , indexOfRecord ) -> {
-	id: record.id,
-	name: record.name default "",
-	description: record.description default "",
-	direccion: record.direccion default "",
-	sexo: record.sexo default "",
-	CP: record.CP default ""
-}]]></ee:set-payload>
-			</ee:message>
-		</ee:transform>
-				<set-variable value='#[vars.fileName as String ++ ".csv"]' doc:name="Set Variable fileName" doc:id="d2e7f527-f037-4081-a067-5d5a34b7bf40" variableName="fileName" />
+				<flow-ref doc:name="Flow Reference" doc:id="384d7a34-6f90-4813-8c26-47addd9d1afe" name="processXmlFlow"/>
+				<set-variable value="1" doc:name="Set Variable level" doc:id="975555e8-9389-44bf-bc72-6e1f091f6c4d" variableName="level" />
 			</when>
 			<when expression='lower(vars.fileType) == "csv"'>
 				<ee:transform doc:name="Transform Message" doc:id="1af3de73-4234-4827-bcf6-13c1c90b34b3">
@@ -56,5 +42,6 @@ payload
 	"file_name" : vars.fileName
 }]]]></http:query-params>
 		</http:request>
+		<error-handler ref="propagate_global_error_handler" />
 	</flow>
 </mule>
