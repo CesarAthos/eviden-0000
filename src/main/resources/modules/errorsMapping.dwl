@@ -1,36 +1,4 @@
 %dw 2.0
-fun getLayer(valuePayload) = if (valuePayload.errorType.Layer?) valuePayload.errorType.Layer else Mule::p("app.layer")
-
-fun customizedError(errorObject, httpError, levelValue) = 
-	if ( errorObject is Null ) {
-		"errorType": {
-			"Layer": getLayer(null)
-		},
-		"level": levelValue as String,
-		"customError": {
-			"statusCode": 500,
-			"message": "Internal Server Error",
-			"type": "CORE-F-040",
-			"location": levelValue  as String ++ " " ++ getLayer(null),
-			"dateTime": "dateTime": now () >> "Europe/Madrid"
-		}
-	}
-	else 
-	{
-		"errorType": (errorObject.errorType ++ {
-			"Layer": getLayer(errorObject.errorMessage.payload)})
-		,
-		"errorDescription": errorObject.description,
-		"errorCode": errorObject.muleMessage.attributes.StatusCode,
-		"level": levelValue as String,
-		"customError": {
-			"statusCode": httpError."statusCode",
-			"message": httpError."message",
-			"type": httpError."type",
-			"location": levelValue as String ++ " " ++ getLayer(errorObject.errorMessage.payload),
-			"dateTime": now () >> "Europe/Madrid"
-		}
-	}
 
 fun mapidenERRORToHttpError(idenERROR: String) =
     if (idenERROR == "BAD_REQUEST")      { statusCode: 400, message: "Bad Request", "type": "CORE-F-001" }

@@ -12,6 +12,16 @@ http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/fil
 			</http:error-response>
 		</http:listener>
 		<flow-ref doc:name="Flow Reference" doc:id="d123b71a-4a9a-4c73-abde-3f1826d622f2" name="utilFlow" />
+		<flow-ref doc:name="Flow Reference" doc:id="7d43a6f6-a164-4df6-aa37-0c3f9120a52c" name="api-sys-mainFlow1"/>
+		<set-variable value="1" doc:name="Set Variable" doc:id="8f9e5b92-85cd-46b7-af71-8f323106bd65" variableName="level" />
 		<file:write doc:name="Write" doc:id="e0edab09-3acf-4d04-9ac3-92e693425c80" path='#["C:/BRISAS/ouput/" ++ attributes.queryParams.file_name as String]' config-ref="File_Config"/>
+		<set-payload value='#[%dw 2.0&#10;output application/json&#10;---&#10;{message: "ok"}]' doc:name="Set Payload" doc:id="adec569b-07e7-4349-9bc0-5e29a10bdcf8" />
+		<error-handler ref="propagate_global_error_handler" />
+	</flow>
+	<flow name="api-sys-mainFlow1" doc:id="0daa685f-9e38-4547-b6c7-d78bdb324a5f" >
+		<set-variable value="2" doc:name="Set Variable" doc:id="233924bc-9d85-4323-9e5c-a20700877ef9" variableName="level"/>
+		<logger level="INFO" doc:name="Logger" doc:id="ef448fb6-7027-4e5d-be2e-fa8dc7554ff9" message="Error test continue"/>
+		<raise-error doc:name="Raise error" doc:id="80f357f4-bf3d-48ab-b4f5-6e6a5bb1024c" type="APP:TEST_ERROR"/>
+		<error-handler ref="continue_global_error_handler" />
 	</flow>
 </mule>
