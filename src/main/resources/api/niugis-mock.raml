@@ -4,11 +4,11 @@ title: Niugis Mock
 baseUri: http://{domain}/api
 
 uses:
-  security: /exchange_modules/cb2264e5-b78e-4187-a0b7-2d9db955b8d7/security-library/1.0.1/security-library.raml
+  security: exchange_modules/f36688ab-93de-44ae-966d-9cb7c3d1cfa5/security-library/1.0.0/security-library.raml
 
 traits:
-  common-responses: !include /exchange_modules/cb2264e5-b78e-4187-a0b7-2d9db955b8d7/common-responses/1.0.0/common-responses.raml
-  health: !include /exchange_modules/cb2264e5-b78e-4187-a0b7-2d9db955b8d7/health-check/1.0.0/health-check.raml
+  common-responses: !include /exchange_modules/f36688ab-93de-44ae-966d-9cb7c3d1cfa5/common-responses-tickets/1.0.0/common-responses-tickets.raml
+  health: !include exchange_modules/f36688ab-93de-44ae-966d-9cb7c3d1cfa5/health-check/1.0.0/health-check.raml
 
 /v1:
   /health:
@@ -19,13 +19,13 @@ traits:
           description: Service is healthy.
           body:
             application/json:
-              type: 
+              type: !include /responses/healthUp.raml
   
         503:
           description: Service is unhealthy.
           body:
             application/json:
-              type: 
+              type: !include /responses/healthDown.raml
 
   /services:
     get:
@@ -35,7 +35,7 @@ traits:
         200:
           body:
             application/json:
-              type: 
+              type: !include /responses/services-res.raml
     /{id}:
       get:
         securedBy: [security.basicAuth]
@@ -44,7 +44,7 @@ traits:
           200:
             body:
               application/json:
-                type: 
+                type: !include /responses/services-id-res.raml
   /highways:
     get:
       securedBy: [security.basicAuth]
@@ -53,7 +53,7 @@ traits:
         200:
           body:
             application/json:
-                type: 
+                type: !include /responses/highways-res.raml
 
     /{id}:
       get:
@@ -63,7 +63,7 @@ traits:
           200:
             body:
               application/json:
-                type: 
+                type: !include /responses/highways-id-res.raml
   /tolls:
     get:
       securedBy: [security.basicAuth]
@@ -72,7 +72,7 @@ traits:
         200:
           body:
             application/json:
-              type: 
+              type: !include /responses/tolls-res.raml
     /{id}:
       get:
         securedBy: [security.basicAuth]
@@ -81,7 +81,7 @@ traits:
           200:
             body:
               application/json:
-                type: 
+                type: !include /responses/tolls-id-res.raml
   /nodes:
     get:
       securedBy: [security.basicAuth]
@@ -90,7 +90,7 @@ traits:
         200:
           body:
             application/json:
-               type: 
+               type: !include /responses/node-res.raml
     /{id}:
       get:
         securedBy: [security.basicAuth]
@@ -99,17 +99,17 @@ traits:
           200:
             body:
               application/json:
-                 type: 
+                 type: !include/responses/node-id-res.raml
     /modeling:
-      get:
-        securedBy: [security.basicAuth]
-        description: "Node Branch Metadata"
-        responses:
-          200:
-            body:
-              application/json:
-                type: 
-      /{id}:
+     get:
+      securedBy: [security.basicAuth]
+      description: "Node Branch Metadata"
+      responses:
+        200:
+          body:
+            application/json:
+              type: !include /responses/node-model-res.raml  
+     /{id}:
         get:
           securedBy: [security.basicAuth]
           description: One selected pedestrian by Id
@@ -117,7 +117,7 @@ traits:
             200:
               body:
                 application/json:
-                  type: 
+                  type: !include /responses/node-model-id-res.raml  
   /underlines:
     get:
       securedBy: [security.basicAuth]
@@ -126,7 +126,7 @@ traits:
         200:
           body:
             application/json:
-             type: 
+             type: !include /responses/underllining-res.raml
     /{id}:
       get:
         securedBy: [security.basicAuth]
@@ -135,7 +135,7 @@ traits:
           200:
             body:
               application/json:
-                type: 
+                type: !include /responses/underlining-id-res.raml
   /bcr:
     get:
       securedBy: [security.basicAuth]
@@ -144,7 +144,7 @@ traits:
         200:
           body:
             application/json:
-              type: 
+              type: !include /responses/bcr-res.raml
     /{id}:
       get:
         securedBy: [security.basicAuth]
@@ -153,7 +153,7 @@ traits:
           200:
             body:
               application/json:
-                type: 
+                type: !include /responses/bcr-res.raml
 
 
 

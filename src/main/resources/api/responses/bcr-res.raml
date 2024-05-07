@@ -1,0 +1,73 @@
+#%RAML 1.0 DataType 
+type: object
+properties:
+  id:
+    type: string
+    example: zonas_de_paragem_bcr
+    required: false
+  title:
+    type: string
+    example: Zonas de paragem bcr
+    required: false
+  description:
+    type: string
+    example: >-
+      Trata-se do ficheiro que representa a caracterização da largura da berma
+      direita, por sentido, das autoestradas da rede BCR. Classificação agrupada
+      por segmentos que representam classes de largura. As classes são as
+      seguintes 1) Berma Reduzida inferior a dois metros 2) Berma Intermédia
+      superior ou igual a dois metros e inferior a dois metros e meio 3) Berma
+      Larga, superior a dois metros e meio
+    required: false
+  keywords:
+    type: array
+    items:
+      type: string
+  links:
+    type: array
+    items:
+      type: object
+      properties:
+        type:
+          type: string
+          example: application/json
+          required: false
+        rel:
+          type: string
+          example: root
+          required: false
+        title:
+          type: string
+          example: The landing page of this server as JSON
+          required: false
+        href:
+          type: string
+          example: https://apibrisa.niugis.com?f=json
+          required: false
+  extent:
+    type: object
+    properties:
+      spatial:
+        type: object
+        properties:
+          bbox:
+            type: array
+            items:
+              type: array
+          crs:
+            type: string
+            example: http://www.opengis.net/def/crs/EPSG/8.5/4326
+            required: false
+      temporal:
+        type: object
+        properties:
+          interval:
+            type: array
+            items:
+              type: array
+  itemType:
+    type: string
+    example: feature
+    required: false
+
+  example: |

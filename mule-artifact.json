@@ -1,3 +1,4 @@
 {
+  "secureProperties": ["secure.key","secure::credentials.password","secure::credentials.username","secure::niugis.password","secure::niugis.username"],
   "minMuleVersion": "4.5.0"
 }

@@ -1,0 +1,278 @@
+#%RAML 1.0 DataType
+type: object
+properties:
+  type:
+    type: string
+    example: Feature
+    required: false
+  geometry:
+    type: object
+    properties:
+      type:
+        type: string
+        example: MultiPolygon
+        required: false
+      coordinates:
+        type: array
+        items:
+          type: array
+          items:
+            type: array
+            items:
+              type: number
+  properties:
+    type: object
+    properties:
+      ae_fk:
+        type: string
+        example: 0aa52682-cbeb-4547-b5b8-a4afab615b83
+        required: false
+      ae_fk_descr:
+        type: string
+        example: A5 - Auto-Estrada da Costa do Estoril
+        required: false
+      fk_no:
+        type: string
+        example: 483bb9c0-3e83-47c8-aab0-9d5b3b7eaab9
+        required: false
+      fk_no_descr:
+        type: string
+        example: Estoril
+        required: false
+      designa_concat:
+        type: string
+        example: Portagem Estoril
+        required: false
+      designa:
+        type: string
+        example: Estoril
+        required: false
+      n_barreira:
+        type: string
+        example: '0506'
+        required: false
+      sublanco:
+        type: string
+        example: Carcavelos - Estoril
+        required: false
+      sentido:
+        type: string
+        example: Decrescente
+        required: false
+      posicao:
+        type: 'null'
+        example: null
+        required: false
+      km_inicial:
+        type: number
+        example: 19.7
+        required: false
+      pv_no:
+        type: string
+        example: Nó
+        required: false
+      ramo:
+        type: string
+        example: E+F
+        required: false
+      tipo_zona:
+        type: string
+        example: Portagem de Nó
+        required: false
+      cen_operac:
+        type: string
+        example: CO-Carcavelos/Loures
+        required: false
+      n_ilhas:
+        type: string
+        example: '5'
+        required: false
+      n_vias:
+        type: string
+        example: '6'
+        required: false
+      n_cabines:
+        type: string
+        example: '4'
+        required: false
+      data_da_ultima_actualizacao:
+        type: datetime-only
+        example: '2023-08-01T11:39:54'
+        required: false
+      id:
+        type: string
+        example: 51650dd7-ca01-47ab-bc1a-e75b478c6be5
+        required: false
+  id:
+    type: string
+    example: 51650dd7-ca01-47ab-bc1a-e75b478c6be5
+    required: false
+  prev:
+    type: string
+    example: 50d3b7b4-ca0a-4599-b72b-ace17c378cf2
+    required: false
+  next:
+    type: string
+    example: 55fb8902-9a1a-470e-9bd6-027052bcdf18
+    required: false
+  links:
+    type: array
+    items:
+      type: object
+      properties:
+        type:
+          type: string
+          example: application/json
+          required: false
+        rel:
+          type: string
+          example: root
+          required: false
+        title:
+          type: string
+          example: The landing page of this server as JSON
+          required: false
+        href:
+          type: string
+          example: https://apibrisa.niugis.com?f=json
+          required: false
+example: |
+  {
+    "type": "Feature",
+    "geometry": {
+        "type": "MultiPolygon",
+        "coordinates": [
+            [
+                [
+                    -9.389733449,
+                    38.716475149
+                ],
+                [
+                    -9.389452601,
+                    38.716443868
+                ],
+                [
+                    -9.38941687,
+                    38.716588244
+                ],
+                [
+                    -9.388807917,
+                    38.71649574
+                ],
+                [
+                    -9.388726529,
+                    38.716487429
+                ],
+                [
+                    -9.388749399,
+                    38.716367364
+                ],
+                [
+                    -9.388837126,
+                    38.716377721
+                ],
+                [
+                    -9.388866334,
+                    38.716259703
+                ],
+                [
+                    -9.389232788,
+                    38.71631537
+                ],
+                [
+                    -9.389247599,
+                    38.716255526
+                ],
+                [
+                    -9.38947567,
+                    38.716290171
+                ],
+                [
+                    -9.389514031,
+                    38.716135165
+                ],
+                [
+                    -9.38980659,
+                    38.716179606
+                ],
+                [
+                    -9.389733449,
+                    38.716475149
+                ]
+            ]
+        ]
+    },
+    "properties": {
+        "ae_fk": "0aa52682-cbeb-4547-b5b8-a4afab615b83",
+        "ae_fk_descr": "A5 - Auto-Estrada da Costa do Estoril",
+        "fk_no": "483bb9c0-3e83-47c8-aab0-9d5b3b7eaab9",
+        "fk_no_descr": "Estoril",
+        "designa_concat": "Portagem Estoril",
+        "designa": "Estoril",
+        "n_barreira": "0506",
+        "sublanco": "Carcavelos - Estoril",
+        "sentido": "Decrescente",
+        "posicao": null,
+        "km_inicial": 19.7,
+        "pv_no": "Nó",
+        "ramo": "E+F",
+        "tipo_zona": "Portagem de Nó",
+        "cen_operac": "CO-Carcavelos/Loures",
+        "n_ilhas": "5",
+        "n_vias": "6",
+        "n_cabines": "4",
+        "data_da_ultima_actualizacao": "2023-08-01T11:39:54",
+        "id": "51650dd7-ca01-47ab-bc1a-e75b478c6be5"
+    },
+    "id": "51650dd7-ca01-47ab-bc1a-e75b478c6be5",
+    "prev": "50d3b7b4-ca0a-4599-b72b-ace17c378cf2",
+    "next": "55fb8902-9a1a-470e-9bd6-027052bcdf18",
+    "links": [
+        {
+            "type": "application/json",
+            "rel": "root",
+            "title": "The landing page of this server as JSON",
+            "href": "https://apibrisa.niugis.com?f=json"
+        },
+        {
+            "type": "text/html",
+            "rel": "root",
+            "title": "The landing page of this server as HTML",
+            "href": "https://apibrisa.niugis.com?f=html"
+        },
+        {
+            "rel": "self",
+            "type": "application/geo+json",
+            "title": "This document as GeoJSON",
+            "href": "https://apibrisa.niugis.com/collections/barreiras_de_portagem/items/51650dd7-ca01-47ab-bc1a-e75b478c6be5?f=json"
+        },
+        {
+            "rel": "alternate",
+            "type": "application/ld+json",
+            "title": "This document as RDF (JSON-LD)",
+            "href": "https://apibrisa.niugis.com/collections/barreiras_de_portagem/items/51650dd7-ca01-47ab-bc1a-e75b478c6be5?f=jsonld"
+        },
+        {
+            "rel": "alternate",
+            "type": "text/html",
+            "title": "This document as HTML",
+            "href": "https://apibrisa.niugis.com/collections/barreiras_de_portagem/items/51650dd7-ca01-47ab-bc1a-e75b478c6be5?f=html"
+        },
+        {
+            "rel": "collection",
+            "type": "application/json",
+            "title": "Barreiras de Portagem",
+            "href": "https://apibrisa.niugis.com/collections/barreiras_de_portagem"
+        },
+        {
+            "rel": "prev",
+            "type": "application/json",
+            "href": "https://apibrisa.niugis.com/collections/barreiras_de_portagem/items/50d3b7b4-ca0a-4599-b72b-ace17c378cf2?f=json"
+        },
+        {
+            "rel": "next",
+            "type": "application/json",
+            "href": "https://apibrisa.niugis.com/collections/barreiras_de_portagem/items/55fb8902-9a1a-470e-9bd6-027052bcdf18?f=json"
+        }
+    ]
+  }

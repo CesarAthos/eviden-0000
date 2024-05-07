@@ -1,0 +1,149 @@
+#%RAML 1.0 DataType
+type: object
+properties:
+  type:
+    type: string
+    example: Feature
+    required: false
+  geometry:
+    type: object
+    properties:
+      type:
+        type: string
+        example: MultiLineString
+        required: false
+      coordinates:
+        type: array
+        items:
+          type: array
+          items:
+            type: number
+  properties:
+    type: object
+    properties:
+      autoestrada_id:
+        type: string
+        example: 04dc211a-b895-4d16-ae25-91fcea693228
+        required: false
+      autoestrada_id_descr:
+        type: string
+        example: A12/LAG
+        required: false
+      nome_ae:
+        type: string
+        example: A12_LAG
+        required: false
+      sublanco_id:
+        type: string
+        example: 43a36e51-5f7a-40b2-bd8d-e127072377fb
+        required: false
+      sublanco_id_descr:
+        type: string
+        example: A12/EN10-Alto da Guerra
+        required: false
+      pk_no:
+        type: integer
+        example: 3200
+        required: false
+      designacao:
+        type: string
+        example: EN10-Ramo do Nó-A
+        required: false
+      ramo_projeto:
+        type: string
+        example: A
+        required: false
+      alias_ramo:
+        type: string
+        example: A
+        required: false
+      class_apcap_cco_sin:
+        type: string
+        example: Ramo do Nó
+        required: false
+      alias_direcao_apcap:
+        type: string
+        example: N10 (Rotunda 2) > N10-8 (Mitrena)
+        required: false
+      sentido_cco_sin:
+        type: string
+        example: Crescente
+        required: false
+      sentido_fluxo:
+        type: string
+        example: Entrada na Autoestrada
+        required: false
+      visao_concessao:
+        type: string
+        example: Outra Entidade
+        required: false
+      nome_no:
+        type: string
+        example: EN10
+        required: false
+      visao_manutencao:
+        type: string
+        example: Outra Entidade
+        required: false
+      visao_ar:
+        type: string
+        example: Outra Entidade
+        required: false
+      no_id:
+        type: string
+        example: 46ed9344-eccd-4861-b9be-1545712ffef5
+        required: false
+      no_id_descr:
+        type: string
+        example: EN10
+        required: false
+      data_da_ultima_actualizacao:
+        type: datetime-only
+        example: '2020-11-22T17:23:34'
+        required: false
+      beginlifespanversion:
+        type: 'null'
+        example: null
+        required: false
+      endlifespanversion:
+        type: 'null'
+        example: null
+        required: false
+      id:
+        type: string
+        example: d48ef170-b1ba-4fb8-ada8-a6b8bbbda3dc
+        required: false
+  id:
+    type: string
+    example: d48ef170-b1ba-4fb8-ada8-a6b8bbbda3dc
+    required: false
+  prev:
+    type: string
+    example: d439d569-631e-4437-b87c-be77fac963fc
+    required: false
+  next:
+    type: string
+    example: d49969f5-43db-4c3c-bd27-a63e652ac77e
+    required: false
+  links:
+    type: array
+    items:
+      type: object
+      properties:
+        type:
+          type: string
+          example: application/json
+          required: false
+        rel:
+          type: string
+          example: root
+          required: false
+        title:
+          type: string
+          example: The landing page of this server as JSON
+          required: false
+        href:
+          type: string
+          example: https://apibrisa.niugis.com?f=json
+          required: false
+  

@@ -1,0 +1,133 @@
+#%RAML 1.0 DataType
+type: object
+properties:
+  type:
+    type: string
+    example: Feature
+    required: false
+  geometry:
+    type: object
+    properties:
+      type:
+        type: string
+        example: Point
+        required: false
+      coordinates:
+        type: array
+        items:
+          type: number
+  properties:
+    type: object
+    properties:
+      designacao:
+        type: string
+        example: A10/A13
+        required: false
+      data_da_ultima_actualizacao:
+        type: datetime-only
+        example: '2023-08-01T11:32:47'
+        required: false
+      id:
+        type: string
+        example: b48a8e39-185f-4c3f-9dc5-b7475b045e87
+        required: false
+  id:
+    type: string
+    example: b48a8e39-185f-4c3f-9dc5-b7475b045e87
+    required: false
+  prev:
+    type: string
+    example: b3180359-42b9-4a40-b1fe-f8c55d3a7dd2
+    required: false
+  next:
+    type: string
+    example: b70b7273-20c0-455e-8b46-52fb7cff6899
+    required: false
+  links:
+    type: array
+    items:
+      type: object
+      properties:
+        type:
+          type: string
+          example: application/json
+          required: false
+        rel:
+          type: string
+          example: root
+          required: false
+        title:
+          type: string
+          example: The landing page of this server as JSON
+          required: false
+        href:
+          type: string
+          example: https://apibrisa.niugis.com?f=json
+          required: false
+example: |
+  {
+    "type": "Feature",
+    "geometry": {
+        "type": "Point",
+        "coordinates": [
+            -8.787214436,
+            38.90935507
+        ]
+    },
+    "properties": {
+        "designacao": "A10/A13",
+        "data_da_ultima_actualizacao": "2023-08-01T11:32:47",
+        "id": "b48a8e39-185f-4c3f-9dc5-b7475b045e87"
+    },
+    "id": "b48a8e39-185f-4c3f-9dc5-b7475b045e87",
+    "prev": "b3180359-42b9-4a40-b1fe-f8c55d3a7dd2",
+    "next": "b70b7273-20c0-455e-8b46-52fb7cff6899",
+    "links": [
+        {
+            "type": "application/json",
+            "rel": "root",
+            "title": "The landing page of this server as JSON",
+            "href": "https://apibrisa.niugis.com?f=json"
+        },
+        {
+            "type": "text/html",
+            "rel": "root",
+            "title": "The landing page of this server as HTML",
+            "href": "https://apibrisa.niugis.com?f=html"
+        },
+        {
+            "rel": "self",
+            "type": "application/geo+json",
+            "title": "This document as GeoJSON",
+            "href": "https://apibrisa.niugis.com/collections/nos/items/b48a8e39-185f-4c3f-9dc5-b7475b045e87?f=json"
+        },
+        {
+            "rel": "alternate",
+            "type": "application/ld+json",
+            "title": "This document as RDF (JSON-LD)",
+            "href": "https://apibrisa.niugis.com/collections/nos/items/b48a8e39-185f-4c3f-9dc5-b7475b045e87?f=jsonld"
+        },
+        {
+            "rel": "alternate",
+            "type": "text/html",
+            "title": "This document as HTML",
+            "href": "https://apibrisa.niugis.com/collections/nos/items/b48a8e39-185f-4c3f-9dc5-b7475b045e87?f=html"
+        },
+        {
+            "rel": "collection",
+            "type": "application/json",
+            "title": "Nós",
+            "href": "https://apibrisa.niugis.com/collections/nos"
+        },
+        {
+            "rel": "prev",
+            "type": "application/json",
+            "href": "https://apibrisa.niugis.com/collections/nos/items/b3180359-42b9-4a40-b1fe-f8c55d3a7dd2?f=json"
+        },
+        {
+            "rel": "next",
+            "type": "application/json",
+            "href": "https://apibrisa.niugis.com/collections/nos/items/b70b7273-20c0-455e-8b46-52fb7cff6899?f=json"
+        }
+    ]
+  }

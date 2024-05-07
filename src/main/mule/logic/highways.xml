@@ -5,6 +5,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
 http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
 	<flow name="highwaysFlow" doc:id="07346dad-d0e1-490c-96da-20bf6a5252d9" >
+		<set-variable value="2" doc:name="Set Level = 2" doc:id="dad1202f-99a3-4511-b6a6-230d78bb6c46" variableName="level" />
 		<http:request method="GET" doc:name="Request" doc:id="83018bfb-4aba-4622-9cb4-77f0f75316b3" config-ref="HTTP_Request_configuration" path="/autoestradas_to_be/items" >
 			<http:query-params ><![CDATA[#[output application/java
 ---
@@ -12,7 +13,8 @@ http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/htt
 	"f" : "json"
 }]]]></http:query-params>
 		</http:request>
-	</flow>
+	
+</flow>
 	<flow name="highways-idFlow" doc:id="93469578-34e7-4994-aa1e-a668552ba197" >
 		<http:request method="GET" doc:name="Request" doc:id="c9d11bab-b9dd-41ef-9165-a9dc17a880fa" config-ref="HTTP_Request_configuration" path="/autoestradas_to_be/items/{id}" >
 			<http:uri-params ><![CDATA[#[output application/java
@@ -26,5 +28,7 @@ http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/htt
 	"f" : "json"
 }]]]></http:query-params>
 		</http:request>
-	</flow>
+		<set-variable value="2" doc:name="Set Level = 2" doc:id="757bd9f4-49d4-4a06-9eb3-374468676a40" variableName="level" />
+	
+</flow>
 </mule>

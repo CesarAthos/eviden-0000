@@ -1,0 +1,155 @@
+#%RAML 1.0 DataType 
+type: object
+properties:
+  type:
+    type: string
+    example: Feature
+    required: false
+  geometry:
+    type: object
+    properties:
+      type:
+        type: string
+        example: MultiPolygon
+        required: false
+      coordinates:
+        type: array
+        items:
+          type: array
+  properties:
+    type: object
+    properties:
+      concessionario:
+        type: string
+        example: BCR
+        required: false
+      autoestrada_id:
+        type: string
+        example: 04dc211a-b895-4d16-ae25-91fcea693228
+        required: false
+      autoestrada_id_descr:
+        type: string
+        example: A12/LAG
+        required: false
+      nome_autoestrada:
+        type: string
+        example: A12 - Ligação Alto da Guerra
+        required: false
+      designacao:
+        type: string
+        example: A12/EN10-Alto da Guerra
+        required: false
+      pk_inicial:
+        type: integer
+        example: 0
+        required: false
+      pk_final:
+        type: integer
+        example: 800
+        required: false
+      abertura_a:
+        type: date-only
+        example: '2012-01-01'
+        required: false
+      ext_contra:
+        type: integer
+        example: 3200
+        required: false
+      ext_explor:
+        type: integer
+        example: 800
+        required: false
+      extensao_t:
+        type: number
+        example: 0.85
+        required: false
+      centro_operacional_id:
+        type: string
+        example: 08898a67-15ae-4ded-8438-f07ab22fd85d
+        required: false
+      centro_operacional_id_descr:
+        type: string
+        example: CO Coina
+        required: false
+      ptt:
+        type: string
+        example: 2x1
+        required: false
+      portagem:
+        type: string
+        example: '1'
+        required: false
+      rede_core_:
+        type: 'null'
+        example: null
+        required: false
+      inicio_id:
+        type: string
+        example: 46ed9344-eccd-4861-b9be-1545712ffef5
+        required: false
+      inicio_id_descr:
+        type: string
+        example: EN10
+        required: false
+      fim_id:
+        type: string
+        example: 8107eb1a-0275-4b0b-8953-b5ebe7112f9d
+        required: false
+      fim_id_descr:
+        type: string
+        example: Alto do Guerra
+        required: false
+      cod_sublan:
+        type: string
+        example: 12-4A
+        required: false
+      n_saida:
+        type: 'null'
+        example: null
+        required: false
+      data_da_ultima_actualizacao:
+        type: 'null'
+        example: null
+        required: false
+      id:
+        type: string
+        example: 43a36e51-5f7a-40b2-bd8d-e127072377fb
+        required: false
+  id:
+    type: string
+    example: 43a36e51-5f7a-40b2-bd8d-e127072377fb
+    required: false
+  prev:
+    type: string
+    example: 40dde166-171a-4374-ab04-bc3f0e4a6743
+    required: false
+  next:
+    type: string
+    example: 43bbdfca-3485-47ed-bd50-675d5d7a6c67
+    required: false
+  links:
+    type: array
+    items:
+      type: object
+      properties:
+        type:
+          type: string
+          example: application/json
+          required: false
+        rel:
+          type: string
+          example: root
+          required: false
+        title:
+          type: string
+          example: The landing page of this server as JSON
+          required: false
+        href:
+          type: string
+          example: https://apibrisa.niugis.com?f=json
+          required: false
+
+
+  
+
+

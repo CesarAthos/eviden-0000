@@ -1,0 +1,160 @@
+#%RAML 1.0 DataType
+type: object
+properties:
+  id:
+    type: string
+    example: modelacao_dos_nos
+    required: false
+  title:
+    type: string
+    example: Modelação dos Nós
+    required: false
+  description:
+    type: string
+    example: Metadados dos Ramos dos Nós.
+    required: false
+  keywords:
+    type: array
+    items:
+      type: string
+  links:
+    type: array
+    items:
+      type: object
+      properties:
+        type:
+          type: string
+          example: application/json
+          required: false
+        rel:
+          type: string
+          example: root
+          required: false
+        title:
+          type: string
+          example: The landing page of this server as JSON
+          required: false
+        href:
+          type: string
+          example: https://apibrisa.niugis.com?f=json
+          required: false
+  extent:
+    type: object
+    properties:
+      spatial:
+        type: object
+        properties:
+          bbox:
+            type: array
+            items:
+              type: array
+          crs:
+            type: string
+            example: http://www.opengis.net/def/crs/EPSG/8.5/4326
+            required: false
+      temporal:
+        type: object
+        properties:
+          interval:
+            type: array
+            items:
+              type: array
+  itemType:
+    type: string
+    example: feature
+    required: false
+example: |
+  {
+    "id": "modelacao_dos_nos",
+    "title": "Modelação dos Nós",
+    "description": "Metadados dos Ramos dos Nós.",
+    "keywords": [
+        "Modelação",
+        "dos",
+        "Nós"
+    ],
+    "links": [
+        {
+            "type": "application/json",
+            "rel": "root",
+            "title": "The landing page of this server as JSON",
+            "href": "https://apibrisa.niugis.com?f=json"
+        },
+        {
+            "type": "text/html",
+            "rel": "root",
+            "title": "The landing page of this server as HTML",
+            "href": "https://apibrisa.niugis.com?f=html"
+        },
+        {
+            "type": "application/json",
+            "rel": "self",
+            "title": "This document as JSON",
+            "href": "https://apibrisa.niugis.com/collections/modelacao_dos_nos?f=json"
+        },
+        {
+            "type": "application/ld+json",
+            "rel": "alternate",
+            "title": "This document as RDF (JSON-LD)",
+            "href": "https://apibrisa.niugis.com/collections/modelacao_dos_nos?f=jsonld"
+        },
+        {
+            "type": "text/html",
+            "rel": "alternate",
+            "title": "This document as HTML",
+            "href": "https://apibrisa.niugis.com/collections/modelacao_dos_nos?f=html"
+        },
+        {
+            "type": "application/json",
+            "rel": "queryables",
+            "title": "Queryables for this collection as JSON",
+            "href": "https://apibrisa.niugis.com/collections/modelacao_dos_nos/queryables?f=json"
+        },
+        {
+            "type": "text/html",
+            "rel": "queryables",
+            "title": "Queryables for this collection as HTML",
+            "href": "https://apibrisa.niugis.com/collections/modelacao_dos_nos/queryables?f=html"
+        },
+        {
+            "type": "application/geo+json",
+            "rel": "items",
+            "title": "items as GeoJSON",
+            "href": "https://apibrisa.niugis.com/collections/modelacao_dos_nos/items?f=json"
+        },
+        {
+            "type": "application/ld+json",
+            "rel": "items",
+            "title": "items as RDF (GeoJSON-LD)",
+            "href": "https://apibrisa.niugis.com/collections/modelacao_dos_nos/items?f=jsonld"
+        },
+        {
+            "type": "text/html",
+            "rel": "items",
+            "title": "Items as HTML",
+            "href": "https://apibrisa.niugis.com/collections/modelacao_dos_nos/items?f=html"
+        }
+    ],
+    "extent": {
+        "spatial": {
+            "bbox": [
+                [
+                    -9.444872853038667,
+                    37.15198301010688,
+                    -7.051881841325777,
+                    41.990709446616634
+                ]
+            ],
+            "crs": "http://www.opengis.net/def/crs/EPSG/8.5/4326"
+        },
+        "temporal": {
+            "interval": [
+                [
+                    null,
+                    null
+                ]
+            ]
+        }
+    },
+    "itemType": "feature"
+  }

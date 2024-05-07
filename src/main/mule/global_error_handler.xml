@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<mule xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd">
-	<error-handler name="global_error_handlerError" doc:id="ff3573de-10af-4ca1-8802-59be89f3887e" >
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<error-handler name="propagate_global_error_handler" doc:id="ff3573de-10af-4ca1-8802-59be89f3887e" >
 		<on-error-propagate enableNotifications="true" logException="true" doc:name="On Error Propagate" doc:id="e0cdffa7-d64d-4c9e-a4fb-8d02a5ab26fa" type="ANY">
-			<set-payload value='#[import * from modules::errorsMapping&#10;output application/json&#10;---&#10;customizedError(error,mapErrorCodeToHttpError(error.muleMessage.attributes.StatusCode default 500), vars.level)]' doc:name="Set Error Details" doc:id="b8355226-7831-454e-bd16-5c4a9d3d942b" />
-			<logger level="INFO" doc:name="Error Logger" doc:id="e0da79e6-d111-4a7f-b8df-6a2df1b254cb" message='#[payload]' />
-			<set-payload value="#[payload.customError]" doc:name="Set Payload Custom" doc:id="815fefa5-80c1-4fcf-a1d4-c31c5c7c2db2" />
+			<set-payload value='#[%dw 2.0&#10;import * from modules::errorsMapping&#10;output application/json&#10;var errorTypeValue = error.errorType default {}&#10;var layerValue = error.errorMessage.payload.errorType.layer default Mule::p("app.layer")&#10;var identifierValue = error.errorType.identifier default ""&#10;var httpError = mapidenERRORToHttpError(identifierValue)&#10;var levelValue = vars.level as String default "1"&#10;---&#10;{&#10;	"errorType": (errorTypeValue ++ {&#10;		"layer": layerValue}),&#10;	"errorDescription": error.description,&#10;	"errorCode": error.muleMessage.attributes.StatusCode,&#10;	"level": levelValue,&#10;	"customError": httpError ++ {&#10;		"location": levelValue ++ " " ++ layerValue,&#10;		"dateTime": now () &gt;&gt; "Europe/Madrid"&#10;	}&#10;}]' doc:name="Set Error Details" doc:id="b8355226-7831-454e-bd16-5c4a9d3d942b" />
+			<logger level="INFO" doc:name="Error Logger" doc:id="e0da79e6-d111-4a7f-b8df-6a2df1b254cb" message="#[payload.customError]" />
 		
 </on-error-propagate>
 	</error-handler>
+
 </mule>

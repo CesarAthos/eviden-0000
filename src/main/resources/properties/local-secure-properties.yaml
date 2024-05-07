@@ -1,7 +1,7 @@
-# Secure Properties Configuration Mulesoft
-
-# Niugis secure keys
+credentials:
+  username: "![t06dG+71sV8=]"
+  password: "![atdO16Ai5Fj7mCkA3a3mWw==]"
+  
 niugis:
   username: "![t06dG+71sV8=]"
   password: "![atdO16Ai5Fj7mCkA3a3mWw==]"
-    

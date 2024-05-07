@@ -1,0 +1,111 @@
+#%RAML 1.0 DataType
+type: object
+properties:
+  type:
+    type: string
+    example: FeatureCollection
+  features:
+    type: array
+    items:
+      type: object
+      properties:
+        type:
+          type: string
+          example: Feature
+        geometry:
+          type: object
+          properties:
+            type:
+              type: string
+              example: MultiPolygon
+            coordinates:
+              type: array
+              items:
+                type: array
+        properties:
+          type: object
+          properties:
+            ae_fk:
+              type: string
+              example: 0aa52682-cbeb-4547-b5b8-a4afab615b83
+            ae_fk_descr:
+              type: string
+              example: A5 - Auto-Estrada da Costa do Estoril
+            fk_no:
+              type: string
+              example: 483bb9c0-3e83-47c8-aab0-9d5b3b7eaab9
+            fk_no_descr:
+              type: string
+              example: Estoril
+            designa_concat:
+              type: string
+              example: Portagem Estoril
+            designa:
+              type: string
+              example: Estoril
+            n_barreira:
+              type: string
+              example: '0506'
+            sublanco:
+              type: string
+              example: Carcavelos - Estoril
+            sentido:
+              type: string
+              example: Decrescente
+            posicao:
+              type: null
+              example: ""
+            km_inicial:
+              type: number
+              example: 19.7
+            pv_no:
+              type: string
+              example: Nó
+            ramo:
+              type: string
+              example: E+F
+            tipo_zona:
+              type: string
+              example: Portagem de Nó
+            cen_operac:
+              type: string
+              example: CO-Carcavelos/Loures
+            n_ilhas:
+              type: string
+              example: '5'
+            n_vias:
+              type: string
+              example: '6'
+            n_cabines:
+              type: string
+              example: '4'
+            data_da_ultima_actualizacao:
+              type: datetime-only
+              example: '2023-08-01T11:39:54'
+            id:
+              type: string
+              example: 51650dd7-ca01-47ab-bc1a-e75b478c6be5
+        id:
+          type: string
+          example: 51650dd7-ca01-47ab-bc1a-e75b478c6be5
+  links:
+    type: array
+    items:
+      type: object
+      properties:
+        type:
+          type: string
+          example: application/geo+json
+        rel:
+          type: string
+          example: self
+        title:
+          type: string
+          example: This document as GeoJSON
+        href:
+          type: string
+          example: >-
+            https://apibrisa.niugis.com/collections/barreiras_de_portagem/items?f=json
+  timeStamp:
+    type: string
+    example: '2024-04-09T16:23:40.028244Z'

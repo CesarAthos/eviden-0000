@@ -5,6 +5,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
 http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
 	<flow name="servicesFlow" doc:id="f3d4707a-d7fe-4286-ad9d-36d454cef6b9" >
+		<set-variable value="2" doc:name="Set Level = 2" doc:id="4deb62d9-3ed6-4f55-8ca6-3bc15230ae6b" variableName="level" />
 		<http:request method="GET" doc:name="Request" doc:id="fded859a-f7b6-4e86-b52e-652a761ddfec" config-ref="HTTP_Request_configuration" path="/areas_de_servico/items">
 			<http:query-params ><![CDATA[#[output application/java
 ---
@@ -12,8 +13,10 @@ http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/htt
 	"f" : "json"
 }]]]></http:query-params>
 		</http:request>
-	</flow>
+	
+</flow>
 	<flow name="services-idFlow" doc:id="58785c0d-ec55-4577-967b-e85fa90da449" >
+		<set-variable value="2" doc:name="Set Level = 2" doc:id="a0da4035-99ac-41ea-8712-8079805eb8bc" variableName="level" />
 		<http:request method="GET" doc:name="Request" doc:id="f71d4c97-0899-4d69-91a6-a514c8d3d75d" config-ref="HTTP_Request_configuration" path="/areas_de_servico/items/{id}">
 			<http:uri-params ><![CDATA[#[output application/java
 ---
@@ -26,5 +29,6 @@ http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/htt
 	"f" : "json"
 }]]]></http:query-params>
 		</http:request>
-	</flow>
+	
+</flow>
 </mule>

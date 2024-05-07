@@ -1,23 +1,13 @@
+
 # Configuración del Listener HTTP
 listenerConfig:
-  name: "httpListenerConfig"
-  host: "0.0.0.0"
+  host: 0.0.0.0
   port: "8081"
-  basePath: "/api"
-
-# Definición del Listener HTTP
-listener.:
-  path: "/example"
-  allowedMethods: ["GET"]
-  configRef: httpListenerConfig
-
+  basePath: /api/*
+  
 # Configuración de la solicitud (Request)
 requestConfig:
-  name: httpRequestConfig
-  basePath: /api
-
-# Definición de la solicitud (Request)
-request:
-  method: GET
-  path: "/hello"
-  configRef: httpRequestConfig
+  basePath: /collections
+  port: "8081"
+  host: apibrisa.niugis.com
+  timeout: "30000"

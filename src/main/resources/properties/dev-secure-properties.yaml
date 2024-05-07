@@ -1,28 +1,7 @@
-# Secure Properties Configuration Mulesoft
-
-# Secure Properties DEV
-secureProperties:
-  # Salesforce secure keys
-  salesforce:
-    client_id: ""
-    secret_id: ""
-    token:     ""
-    username:  ""
-    password:  ""
-  # Mulesoft secure keys
-  mulesoft:
-  # Database secure keys
-  database:
-    # Alias de la propiedad
-    alias: database.url
-    # Valor encriptado de la propiedad
-    value: !secure "ENCRYPTED_VALUE_1"
-
-  # Database secure passwords
-  dbPassword:
-    # Alias de la propiedad
-    alias: database.password
-    # Valor encriptado de la propiedad
-    value: !secure "ENCRYPTED_VALUE_2"
-
-  # Other configurations
+credentials:
+  username: "![t06dG+71sV8=]"
+  password: "![atdO16Ai5Fj7mCkA3a3mWw==]"
+  
+niugis:
+  username: "![t06dG+71sV8=]"
+  password: "![atdO16Ai5Fj7mCkA3a3mWw==]"

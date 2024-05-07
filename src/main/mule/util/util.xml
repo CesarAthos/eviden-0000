@@ -11,6 +11,7 @@ http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/
 			<ee:variables >
 				<ee:set-variable variableName="inboundMessage" ><![CDATA[%dw 2.0
 output application/json
+input payload
 ---
 payload]]></ee:set-variable>
 				<ee:set-variable variableName="level" ><![CDATA[1]]></ee:set-variable>

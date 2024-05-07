@@ -5,6 +5,7 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
 http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
 	<flow name="nodesFlow" doc:id="09f0828b-cf26-49ef-8817-d9ef81c4d440" >
+		<set-variable value="2" doc:name="Set Level = 2" doc:id="a5dc84b1-0769-410b-96d6-f8581c1f6a59" variableName="level" />
 		<http:request method="GET" doc:name="Request" doc:id="7019deb1-0886-4a12-881a-fe762f796a0e" config-ref="HTTP_Request_configuration" path="/nos/items" >
 			<http:query-params ><![CDATA[#[output application/java
 ---
@@ -12,8 +13,10 @@ http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/htt
 	"f" : "json"
 }]]]></http:query-params>
 		</http:request>
-	</flow>
+	
+</flow>
 	<flow name="nodes-idFlow" doc:id="0fc3f36e-2738-47da-8662-5bad0901a8a9" >
+		<set-variable value="2" doc:name="Set Level = 2" doc:id="6247a850-bb1d-4a41-9271-bdb52c2e7683" variableName="level" />
 		<http:request method="GET" doc:name="Request" doc:id="b0945ab7-e95f-45c0-8a7d-d6f2a3b29988" config-ref="HTTP_Request_configuration" path="nos/items/{id}" >
 			<http:uri-params ><![CDATA[#[output application/java
 ---
@@ -26,7 +29,8 @@ http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/htt
 	"f" : "json"
 }]]]></http:query-params>
 		</http:request>
-	</flow>
+	
+</flow>
 	<flow name="nodes-modeling-idFlow" doc:id="e67fb695-88a7-4ffc-bbac-9b0fb8cd3bbf" >
 		<http:request method="GET" doc:name="Request" doc:id="85c423d8-eae2-4b8d-993e-d82319bbe6e4" config-ref="HTTP_Request_configuration" path="/modelacao_dos_nos/items/{id}" >
 			<http:uri-params ><![CDATA[#[output application/java

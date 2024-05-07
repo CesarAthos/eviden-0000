@@ -1,0 +1,87 @@
+#%RAML 1.0 DataType
+type: object
+properties:
+  type:
+    type: string
+  features:
+    type: array
+    items:
+      type: object
+      properties:
+        type:
+          type: string
+        geometry:
+          type: object
+          properties:
+            type:
+              type: string
+            coordinates:
+              type: array
+              items:
+                type: array
+                items:
+                  type: array
+                  items:
+                    type: number
+        properties:
+          type: object
+          properties:
+            ae_fk:
+              type: string
+            ae_fk_descr:
+              type: string
+            fk_no:
+              type: string
+            fk_no_descr:
+              type: string
+            designa_concat:
+              type: string
+            designa:
+              type: string
+            n_barreira:
+              type: string
+            sublanco:
+              type: string
+            sentido:
+              type: string
+            posicao:
+              type: null
+            km_inicial:
+              type: number
+            pv_no:
+              type: string
+            ramo:
+              type: string
+            tipo_zona:
+              type: string
+            cen_operac:
+              type: string
+            n_ilhas:
+              type: string
+            n_vias:
+              type: string
+            n_cabines:
+              type: string
+            data_da_ultima_actualizacao:
+              type: string
+            id:
+              type: string
+        id:
+          type: string
+  links:
+    type: array
+    items:
+      type: object
+      properties:
+        type:
+          type: string
+        rel:
+          type: string
+        title:
+          type: string
+        href:
+          type: string
+  timeStamp:
+    type: string
+
+  

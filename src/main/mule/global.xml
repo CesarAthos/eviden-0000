@@ -1,36 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<mule xmlns:tls="http://www.mulesoft.org/schema/mule/tls"
-	xmlns:spring="http://www.mulesoft.org/schema/mule/spring" xmlns:secure-properties="http://www.mulesoft.org/schema/mule/secure-properties"
-	xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit"
-	xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
+<mule xmlns:api-gateway="http://www.mulesoft.org/schema/mule/api-gateway"
+	xmlns:spring="http://www.mulesoft.org/schema/mule/spring" xmlns:tls="http://www.mulesoft.org/schema/mule/tls"
+	xmlns:secure-properties="http://www.mulesoft.org/schema/mule/secure-properties"
+	xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit" xmlns:file="http://www.mulesoft.org/schema/mule/file" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
 http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
 http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd
 http://www.mulesoft.org/schema/mule/secure-properties http://www.mulesoft.org/schema/mule/secure-properties/current/mule-secure-properties.xsd
+http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/current/mule-tls.xsd
 http://www.mulesoft.org/schema/mule/spring http://www.mulesoft.org/schema/mule/spring/current/mule-spring.xsd
-http://www.mulesoft.org/schema/mule/tls http://www.mulesoft.org/schema/mule/tls/current/mule-tls.xsd">
-	<apikit:config name="eviden-niugis-sys-config" api="eviden-niugis-sys.raml" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" />
-    <http:listener-config name="httpListenerConfig" basePath="${listenerConfig.basePath}">
-        <http:listener-connection host="${listenerConfig.host}" port="${listenerConfig.port}" />
-    </http:listener-config>
-	<configuration-properties doc:name="Configuration properties" doc:id="da2f519e-e068-46db-9473-59c0843b3e09" file="properties\\${env}-properties.yaml" />
-	<global-property doc:name="Global Property" doc:id="6c04fda6-0637-4e1c-9058-c30059f55683" name="env" value="local" />
-	<secure-properties:config name="Secure_Properties_Config" doc:name="Secure Properties Config" doc:id="3471311f-e465-485f-bdb8-c756feedd9c8" key="${secure.key}" file="properties\\${env}-secure-properties.yaml">
+http://www.mulesoft.org/schema/mule/api-gateway http://www.mulesoft.org/schema/mule/api-gateway/current/mule-api-gateway.xsd">
+	<apikit:config name="niugis-mock-config" api="niugis-mock.raml" outboundHeadersMapName="outboundHeaders" httpStatusVarName="httpStatus" />
+    <http:listener-config name="HTTP_Listener_8081" doc:name="HTTP Listener config" doc:id="217f1ff3-eee1-4b9a-b068-64b5531e1020">
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<configuration-properties doc:name="Configuration properties" doc:id="322e13f4-5602-4e6d-90bc-77353fea0b72" file="properties\global-properties.yaml" />
+	<secure-properties:config name="Secure_Properties_Config" doc:name="Secure Properties Config" doc:id="85785a93-412c-4ebf-889a-8a8deeae7406" file="properties\\${env}-secure-properties.yaml" key="${secure.key}" >
 		<secure-properties:encrypt algorithm="Blowfish" />
 	</secure-properties:config>
-	<http:request-config name="HTTP_Request_configuration" doc:name="HTTP Request configuration" doc:id="99d3345e-b5eb-449b-a898-79b6a0398704" basePath="${requestConfig.basePath}" responseTimeout="${requestConfig.timeout}">
-		<http:request-connection host="${requestConfig.host}" protocol="HTTPS">
+	<global-property doc:name="Global Property" doc:id="0d3f5dcb-2453-4b78-bec8-6a0f389b70bd" name="env" value="local" />
+	<configuration-properties doc:name="Configuration properties" doc:id="cb54fd6d-5f37-4fb5-9f1e-2220a98eb2fe" file="properties\\${env}-properties.yaml" />
+	<http:request-config name="HTTP_Request_configuration" doc:name="HTTP Request configuration" doc:id="715ec9a4-daf3-4c70-b200-4ea8d5c29f0f" basePath="${requestConfig.basePath}" responseTimeout="${requestConfig.timeout}">
+		<http:request-connection protocol="HTTPS" host="${requestConfig.host}" >
 			<tls:context >
 				<tls:trust-store insecure="true" />
 			</tls:context>
 			<http:authentication >
-				<http:basic-authentication username="${secure::niugis.username}" password="${secure::niugis.password}"/>
+				<http:basic-authentication username="${secure::niugis.username}" password="${secure::niugis.password}" />
 			</http:authentication>
 		</http:request-connection>
 	</http:request-config>
-	<spring:config name="Spring_Config" doc:name="Spring Config" doc:id="3595da07-6216-4b77-9a5c-258edec4402a" files="beans.xml" />
-	<spring:security-manager doc:name="Spring Security manager" doc:id="eac5f23f-6980-4246-8e0f-40141bd306ba" >
-		<spring:delegate-security-provider name="security-provider" delegate-ref="authenticationManager"/>
+	<spring:config name="Spring_Config" doc:name="Spring Config" doc:id="212d9b68-2181-4477-b6c0-2198913e2d19" files="beans.xml" />
+	<spring:security-manager doc:name="Spring Security manager" doc:id="bd703e05-4b08-47eb-a1ce-9aaff3980c72" >
+		<spring:delegate-security-provider name="security-privider" delegate-ref="authenticationManager" />
 	</spring:security-manager>
-	<configuration doc:name="Configuration" doc:id="3d6b8d01-9e62-4498-ac53-c00c0bc168d0" defaultErrorHandler-ref="global_error_handlerError" />
 </mule>

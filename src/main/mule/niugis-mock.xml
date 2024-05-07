@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mule xmlns:spring="http://www.mulesoft.org/schema/mule/spring" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd 
+http://www.mulesoft.org/schema/mule/spring http://www.mulesoft.org/schema/mule/spring/current/mule-spring.xsd">
+    <flow name="niugis-mock-main">
+        <http:listener config-ref="HTTP_Listener_8081" path="${listenerConfig.basePath}">
+            <http:response statusCode="#[vars.httpStatus default 200]">
+                <http:headers><![CDATA[#[vars.outboundHeaders default {}]]]></http:headers>
+            </http:response>
+            <http:error-response statusCode="#[vars.httpStatus default 500]">
+                <http:body><![CDATA[#[payload]]]></http:body>
+                <http:headers><![CDATA[#[vars.outboundHeaders default {}]]]></http:headers>
+            </http:error-response>
+        </http:listener>
+        <logger level="INFO" doc:name="START MAIN" doc:id="d2fbb6e0-3c79-4c76-acd1-2722451c143c" message="START MAIN" />
+		<flow-ref doc:name="ONLY MULTIPLE FLOWS" doc:id="97190059-d3c6-4f4b-8133-a5cc15df46a2" name="utilFlow" />
+		<choice doc:name="Choice" doc:id="019f502e-c185-42aa-b9ca-d7b3b6a06be7" >
+			<when expression='#[attributes.maskedRequestPath == "/v1/health"]'>
+				<logger level="INFO" doc:name="Logger" doc:id="4dc96b13-7ff2-49be-bf1a-22c08a6f26ad" message="without basic authentication"/>
+			</when>
+			<otherwise >
+				<http:basic-security-filter doc:name="Basic security filter" doc:id="9724c39e-fb9e-47df-a01c-9a2bfda8f28d" realm="Mule"/>
+				<spring:authorization-filter doc:name="Authorization filter" doc:id="7a6376ce-c847-4886-bd07-e16b52fce4a9" requiredAuthorities="ROLE_ADMIN"/>
+			</otherwise>
+		</choice>
+		<apikit:router config-ref="niugis-mock-config" />
+		<logger level="INFO" doc:name="END MAIN" doc:id="cbf5820a-7522-408f-b635-9a260f43283a" message="END MAIN" />
+		<error-handler ref="propagate_global_error_handler" />
+    </flow>
+    <flow name="niugis-mock-console">
+        <http:listener config-ref="HTTP_Listener_8081" path="/console/*">
+            <http:response statusCode="#[vars.httpStatus default 200]">
+                <http:headers>#[vars.outboundHeaders default {}]</http:headers>
+            </http:response>
+            <http:error-response statusCode="#[vars.httpStatus default 500]">
+                <http:body>#[payload]</http:body>
+                <http:headers>#[vars.outboundHeaders default {}]</http:headers>
+            </http:error-response>
+        </http:listener>
+        <apikit:console config-ref="niugis-mock-config" />
+        <error-handler>
+            <on-error-propagate type="APIKIT:NOT_FOUND">
+                <ee:transform doc:name="Transform Message">
+                    <ee:message>
+                        <ee:set-payload><![CDATA[%dw 2.0
+output application/json
+---
+{message: "Resource not found"}]]></ee:set-payload>
+                    </ee:message>
+                    <ee:variables>
+                        <ee:set-variable variableName="httpStatus">404</ee:set-variable>
+                    </ee:variables>
+                </ee:transform>
+            </on-error-propagate>
+        </error-handler>
+    </flow>
+    <flow name="get:\v1\bcr:niugis-mock-config">
+		<flow-ref doc:name="Flow Reference" doc:id="3bdc02e3-734b-438a-a0c6-b895027d2dfa" name="bcrFlow"/>
+    </flow>
+    <flow name="get:\v1\health:niugis-mock-config">
+		<flow-ref doc:name="Flow Reference" doc:id="23891efc-d1af-4f3b-9bc6-95c4cc6d6890" name="healthFlow"/>
+    </flow>
+    <flow name="get:\v1\highways:niugis-mock-config">
+		<flow-ref doc:name="Flow Reference" doc:id="69936f6b-5a14-44c3-a1b4-b2de2b37a107" name="highwaysFlow"/>
+    </flow>
+    <flow name="get:\v1\nodes\modeling:niugis-mock-config">
+		<flow-ref doc:name="Flow Reference" doc:id="4496ebe0-35e6-4223-bedb-b7f1bd15c45c" name="nodes-modelingFlow"/>
+    </flow>
+    <flow name="get:\v1\nodes:niugis-mock-config">
+		<flow-ref doc:name="Flow Reference" doc:id="e7ce9b7d-38ce-4979-9f36-a319db53b01f" name="nodesFlow"/>
+    </flow>
+    <flow name="get:\v1\services:niugis-mock-config">
+		<flow-ref doc:name="Flow Reference" doc:id="025d62e7-91c9-4b2b-b84b-5f649b16928a" name="servicesFlow"/>
+    </flow>
+    <flow name="get:\v1\tolls:niugis-mock-config">
+		<flow-ref doc:name="Flow Reference" doc:id="541db95d-e0e2-41c0-af76-4813aa5709eb" name="tollsFlow"/>
+    </flow>
+    <flow name="get:\v1\underlines:niugis-mock-config">
+		<flow-ref doc:name="Flow Reference" doc:id="5c03c6d9-4fc2-47a0-8592-43b80d631f7b" name="underlinesFlow"/>
+    </flow>
+    <flow name="get:\v1\highways\(id):niugis-mock-config">
+		<flow-ref doc:name="Flow Reference" doc:id="b1067a3b-df3b-42d2-b650-0c077b2c6e04" name="highways-idFlow"/>
+    </flow>
+    <flow name="get:\v1\bcr\(id):niugis-mock-config">
+		<flow-ref doc:name="Flow Reference" doc:id="c121e059-b6e3-4869-a1b7-21aaf150753b" name="bcr-idFlow"/>
+    </flow>
+    <flow name="get:\v1\underlines\(id):niugis-mock-config">
+		<flow-ref doc:name="Flow Reference" doc:id="0a6b42e7-68f9-4aee-a6c6-bc4da537b70c" name="underlines-idFlow"/>
+    </flow>
+    <flow name="get:\v1\nodes\(id):niugis-mock-config">
+		<flow-ref doc:name="Flow Reference" doc:id="89827420-d4da-4a7c-84f4-d1c5aa6faf69" name="nodes-idFlow"/>
+    </flow>
+    <flow name="get:\v1\nodes\modeling\(id):niugis-mock-config">
+		<flow-ref doc:name="Flow Reference" doc:id="5b38dd4a-f47e-4a1f-815b-6b6aa169032f" name="nodes-modeling-idFlow"/>
+    </flow>
+    <flow name="get:\v1\services\(id):niugis-mock-config">
+		<flow-ref doc:name="Flow Reference" doc:id="5a848f14-167e-48f3-a30f-8ed7fe5cd5ec" name="services-idFlow"/>
+    </flow>
+    <flow name="get:\v1\tolls\(id):niugis-mock-config">
+		<flow-ref doc:name="Flow Reference" doc:id="22155f04-2981-4b06-97b0-1cb9237b0c87" name="tolls-idFlow"/>
+    </flow>
+</mule>
