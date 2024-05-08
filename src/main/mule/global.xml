@@ -35,4 +35,5 @@ http://www.mulesoft.org/schema/mule/api-gateway http://www.mulesoft.org/schema/m
 	<spring:security-manager doc:name="Spring Security manager" doc:id="bd703e05-4b08-47eb-a1ce-9aaff3980c72" >
 		<spring:delegate-security-provider name="security-privider" delegate-ref="authenticationManager" />
 	</spring:security-manager>
+	<api-gateway:autodiscovery apiId="2181719" ignoreBasePath="true" doc:name="API Autodiscovery" doc:id="b1deeda8-e197-4fdd-a71a-95fac83c2e6f" flowRef="niugis-mock-main" />
 </mule>
